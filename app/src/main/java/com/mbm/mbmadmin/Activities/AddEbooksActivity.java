@@ -40,7 +40,6 @@ public class AddEbooksActivity extends AppCompatActivity {
             }
         });
 
-        Toast.makeText(this,"toast",Toast.LENGTH_SHORT).show();
 
     }
 
