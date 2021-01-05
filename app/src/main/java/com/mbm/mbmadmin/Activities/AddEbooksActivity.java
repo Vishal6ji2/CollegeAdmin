@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.button.MaterialButton;
@@ -39,6 +40,7 @@ public class AddEbooksActivity extends AppCompatActivity {
             }
         });
 
+        Toast.makeText(this,"toast",Toast.LENGTH_SHORT).show();
 
     }
 
