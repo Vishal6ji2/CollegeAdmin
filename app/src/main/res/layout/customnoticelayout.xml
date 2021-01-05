@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardUseCompatPadding="true"
+    app:cardElevation="3dp"
+    app:cardCornerRadius="5dp"
+    android:layout_margin="1dp">
+
+    <ImageView
+        android:id="@+id/customnotice_img"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/picone"
+        android:scaleType="fitCenter"
+        android:adjustViewBounds="true"/>
+
+
+</androidx.cardview.widget.CardView>
