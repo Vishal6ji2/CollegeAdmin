@@ -8,6 +8,11 @@
     android:orientation="vertical">
 
 
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardElevation="@dimen/_3sdp">
+
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/notice_toolbar"
         android:layout_width="match_parent"
@@ -16,8 +21,8 @@
 
         <ImageView
             android:id="@+id/notice_backimg"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/_22sdp"
+            android:layout_height="@dimen/_22sdp"
             android:src="@drawable/arrowbackblack"/>
 
         <TextView
@@ -26,16 +31,12 @@
             android:text="Notice"
             android:textStyle="bold"
             android:textColor="@color/colorverydarkgrey"
-            android:textSize="18sp"
+            android:textSize="@dimen/_15ssp"
             android:gravity="center"/>
 
     </com.google.android.material.appbar.MaterialToolbar>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="@color/colorverydarkgrey"/>
-
+    </androidx.cardview.widget.CardView>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/notice_recyclerview"

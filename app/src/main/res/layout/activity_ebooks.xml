@@ -7,30 +7,37 @@
     tools:context=".Activities.EbooksActivity"
     android:orientation="vertical">
 
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardElevation="@dimen/_3sdp">
+
     <com.google.android.material.appbar.MaterialToolbar
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:id="@+id/ebook_toolbar"
-        android:background="@color/colorPrimary"
+        android:background="@color/colorPrimaryDark"
         app:menu="@menu/menuaddwhite">
 
         <ImageView
             android:id="@+id/ebook_backimg"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/_22sdp"
+            android:layout_height="@dimen/_22sdp"
             android:src="@drawable/arrowback"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Ebooks library"
-            android:textSize="18sp"
+            android:textSize="@dimen/_15ssp"
             android:fontFamily="@font/cc_semibold"
             android:textColor="@android:color/white"
             android:gravity="center"/>
 
     </com.google.android.material.appbar.MaterialToolbar>
 
+    </androidx.cardview.widget.CardView>
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"

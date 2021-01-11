@@ -10,15 +10,20 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.material.appbar.MaterialToolbar;
+import com.google.android.material.badge.BadgeDrawable;
+import com.google.android.material.badge.BadgeUtils;
 import com.mbm.mbmadmin.R;
 
 public class SyllabusActivity extends AppCompatActivity {
 
     MaterialToolbar toolbar;
+
+    FrameLayout frameLayout;
 
     ImageView backimg;
 

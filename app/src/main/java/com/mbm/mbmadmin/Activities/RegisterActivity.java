@@ -64,7 +64,7 @@ public class RegisterActivity extends AppCompatActivity {
                     toast.show();
 
                 }else {
-                    toast = Toast.makeText(RegisterActivity.this,"Please enter your credentials",Toast.LENGTH_SHORT);
+                    toast = Toast.makeText(RegisterActivity.this,"Registration Successfully",Toast.LENGTH_SHORT);
                     toast.setGravity(Gravity.CENTER,0,0);
                     toast.show();
                     startActivity(new Intent(RegisterActivity.this,HomeActivity.class));

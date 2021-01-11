@@ -71,7 +71,7 @@ public class AddNewsActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
                 int cmpcount = edttitle.getText().length();
-                txttitle.setText(cmpcount);
+                txttitle.setText(cmpcount +"/30");
             }
 
             @Override
@@ -88,7 +88,9 @@ public class AddNewsActivity extends AppCompatActivity {
         if (requestCode == 10 && resultCode == RESULT_OK && data != null) {
 
             Uri uri = data.getData();
+
             newsimg.setImageURI(uri);
+
 
         }
 
@@ -97,13 +99,13 @@ public class AddNewsActivity extends AppCompatActivity {
 
     private void initviews() {
 
-        toolbar = findViewById(R.id.addplacement_toolbar);
+        toolbar = findViewById(R.id.addnews_toolbar);
 
-        backimg = findViewById(R.id.addplacement_backimg);
+        backimg = findViewById(R.id.addnews_backimg);
 
-        btnpost = findViewById(R.id.addplacement_btnpost);
+        btnpost = findViewById(R.id.addnews_btnpost);
 
-        fabcam = findViewById(R.id.addplacement_fabcam);
+        fabcam = findViewById(R.id.addnews_fabcam);
 
         edttitle = findViewById(R.id.addnews_edttitle);
         edtnews = findViewById(R.id.addnews_edtnews);

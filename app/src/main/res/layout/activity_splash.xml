@@ -5,21 +5,24 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".SplashActivity"
-    android:orientation="vertical"
-    android:gravity="center">
+    android:orientation="vertical">
 
 
     <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:src="@drawable/mbmlogo"/>
+        android:layout_width="@dimen/_100sdp"
+        android:layout_height="@dimen/_100sdp"
+        android:src="@drawable/mbmlogo"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/_100sdp"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="MBM "
         android:gravity="center"
-        android:textSize="35sp"
+        android:textSize="@dimen/_22ssp"
+        android:padding="@dimen/_1sdp"
+        android:layout_marginTop="@dimen/_15sdp"
         android:textStyle="bold"
         android:textColor="@android:color/black"/>
 
@@ -27,11 +30,12 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:padding="@dimen/_4sdp"
         android:text="Admin "
         android:gravity="center"
-        android:textSize="25sp"
-        android:textStyle="bold"
-        android:textColor="@android:color/black"/>
+        android:textSize="20sp"
+        android:textStyle="normal"
+        android:textColor="@color/colorverydarkgrey"/>
 
 
 </LinearLayout>

@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -41,6 +42,13 @@ public class TimetableActivity extends AppCompatActivity {
         initviews();
 
         setSupportActionBar(toolbar);
+
+        backimg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         addData("",R.drawable.picone);
         addData("",R.drawable.picone);

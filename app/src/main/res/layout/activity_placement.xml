@@ -11,7 +11,7 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardElevation="3dp">
+        app:cardElevation="@dimen/_3sdp">
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/placement_toolbar"
@@ -21,15 +21,15 @@
 
         <ImageView
             android:id="@+id/placement_backimg"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/_22sdp"
+            android:layout_height="@dimen/_22sdp"
             android:src="@drawable/arrowbackblack"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Placement news"
-            android:textSize="18sp"
+            android:textSize="@dimen/_15ssp"
             android:textStyle="bold"
             android:gravity="center"
             android:textColor="@color/colorverydarkgrey"/>
@@ -42,7 +42,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/placement_recyclerview"/>
-
 
 
 </LinearLayout>

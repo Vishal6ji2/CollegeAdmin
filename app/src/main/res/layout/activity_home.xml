@@ -8,6 +8,11 @@
     android:orientation="vertical">
 
 
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardElevation="@dimen/_3sdp">
+
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/home_toolbar"
         android:layout_width="match_parent"
@@ -16,8 +21,10 @@
 
         <com.mikhaellopez.circularimageview.CircularImageView
             android:id="@+id/home_profileimg"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/_42sdp"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            android:adjustViewBounds="true"
             android:src="@drawable/mbmlogo"/>
 
         <TextView
@@ -25,17 +32,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Hello, Mukesh Singhavi"
-            android:textSize="18sp"
+            android:textSize="@dimen/_15ssp"
             android:gravity="center"
             android:textStyle="bold"/>
 
 
     </com.google.android.material.appbar.MaterialToolbar>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="0.4dp"
-        android:background="@android:color/black"/>
+    </androidx.cardview.widget.CardView>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -51,13 +55,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:cardUseCompatPadding="true"
-                app:cardElevation="2dp"
-                app:cardCornerRadius="5dp">
+                app:cardElevation="@dimen/_2sdp"
+                app:cardCornerRadius="@dimen/_3sdp">
 
                 <RelativeLayout
                     android:id="@+id/home_newsfeedlayout"
                     android:layout_width="match_parent"
-                    android:layout_height="100dp"
+                    android:layout_height="@dimen/_80sdp"
                     android:background="@color/colorpink">
 
                     <TextView
@@ -65,14 +69,11 @@
                         android:layout_height="wrap_content"
                         android:text="News feed"
                         android:textColor="@android:color/white"
-                        android:textSize="25sp"
+                        android:textSize="@dimen/_18ssp"
                         android:textStyle="bold"
-                        android:padding="10dp"/>
-
+                        android:padding="@dimen/_8sdp"/>
 
                 </RelativeLayout>
-
-
 
             </androidx.cardview.widget.CardView>
 
@@ -80,13 +81,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:cardUseCompatPadding="true"
-                app:cardElevation="2dp"
-                app:cardCornerRadius="5dp">
+                app:cardElevation="@dimen/_2sdp"
+                app:cardCornerRadius="@dimen/_3sdp">
 
                 <RelativeLayout
                     android:id="@+id/home_noticelayout"
                     android:layout_width="match_parent"
-                    android:layout_height="100dp"
+                    android:layout_height="@dimen/_80sdp"
                     android:background="@android:color/holo_green_light">
 
                     <TextView
@@ -94,13 +95,11 @@
                         android:layout_height="wrap_content"
                         android:text="Notice"
                         android:textColor="@android:color/white"
-                        android:textSize="25sp"
+                        android:textSize="@dimen/_18ssp"
                         android:textStyle="bold"
-                        android:padding="10dp"/>
+                        android:padding="@dimen/_8sdp"/>
 
                 </RelativeLayout>
-
-
 
             </androidx.cardview.widget.CardView>
 
@@ -108,13 +107,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:cardUseCompatPadding="true"
-                app:cardElevation="2dp"
-                app:cardCornerRadius="5dp">
+                app:cardElevation="@dimen/_2sdp"
+                app:cardCornerRadius="@dimen/_3sdp">
 
                 <RelativeLayout
                     android:id="@+id/home_placementlayout"
                     android:layout_width="match_parent"
-                    android:layout_height="100dp"
+                    android:layout_height="@dimen/_80sdp"
                     android:background="@color/colorPrimaryDark">
 
                     <TextView
@@ -122,14 +121,11 @@
                         android:layout_height="wrap_content"
                         android:text="Placement news"
                         android:textColor="@android:color/white"
-                        android:padding="10dp"
-                        android:textSize="25sp"
+                        android:padding="@dimen/_8sdp"
+                        android:textSize="@dimen/_18ssp"
                         android:textStyle="bold"/>
 
-
                 </RelativeLayout>
-
-
 
             </androidx.cardview.widget.CardView>
 
@@ -137,13 +133,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:cardUseCompatPadding="true"
-                app:cardElevation="2dp"
-                app:cardCornerRadius="5dp">
+                app:cardElevation="@dimen/_2sdp"
+                app:cardCornerRadius="@dimen/_3sdp">
 
                 <RelativeLayout
                     android:id="@+id/home_ebooklayout"
                     android:layout_width="match_parent"
-                    android:layout_height="100dp"
+                    android:layout_height="@dimen/_80sdp"
                     android:background="@color/colorPrimary">
 
                     <TextView
@@ -151,9 +147,9 @@
                         android:layout_height="wrap_content"
                         android:text="Ebooks library"
                         android:textColor="@android:color/white"
-                        android:textSize="25sp"
+                        android:textSize="@dimen/_18ssp"
                         android:textStyle="bold"
-                        android:padding="10dp"/>
+                        android:padding="@dimen/_8sdp"/>
 
                 </RelativeLayout>
 
@@ -163,13 +159,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:cardUseCompatPadding="true"
-                app:cardElevation="2dp"
-                app:cardCornerRadius="5dp">
+                app:cardElevation="@dimen/_2sdp"
+                app:cardCornerRadius="@dimen/_3sdp">
 
                 <RelativeLayout
                     android:id="@+id/home_ttlayout"
                     android:layout_width="match_parent"
-                    android:layout_height="100dp"
+                    android:layout_height="@dimen/_80sdp"
                     android:background="@android:color/holo_orange_light">
 
                     <TextView
@@ -177,13 +173,11 @@
                         android:layout_height="wrap_content"
                         android:text="Time-table"
                         android:textColor="@android:color/white"
-                        android:textSize="25sp"
+                        android:textSize="@dimen/_18ssp"
                         android:textStyle="bold"
-                        android:padding="10dp"/>
+                        android:padding="@dimen/_8sdp"/>
 
                 </RelativeLayout>
-
-
 
             </androidx.cardview.widget.CardView>
 
@@ -191,13 +185,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:cardUseCompatPadding="true"
-                app:cardElevation="2dp"
-                app:cardCornerRadius="5dp">
+                app:cardElevation="@dimen/_2sdp"
+                app:cardCornerRadius="@dimen/_3sdp">
 
                 <RelativeLayout
                     android:id="@+id/home_paperslayout"
                     android:layout_width="match_parent"
-                    android:layout_height="100dp"
+                    android:layout_height="@dimen/_80sdp"
                     android:background="@android:color/holo_purple">
 
                     <TextView
@@ -205,14 +199,11 @@
                         android:layout_height="wrap_content"
                         android:text="Previous papers"
                         android:textColor="@android:color/white"
-                        android:textSize="25sp"
+                        android:textSize="@dimen/_18ssp"
                         android:textStyle="bold"
-                        android:padding="10dp"/>
-
+                        android:padding="@dimen/_8sdp"/>
 
                 </RelativeLayout>
-
-
 
             </androidx.cardview.widget.CardView>
 
@@ -220,13 +211,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:cardUseCompatPadding="true"
-                app:cardElevation="2dp"
-                app:cardCornerRadius="5dp">
+                app:cardElevation="@dimen/_2sdp"
+                app:cardCornerRadius="@dimen/_3sdp">
 
                 <RelativeLayout
                     android:id="@+id/home_syllabuslayout"
                     android:layout_width="match_parent"
-                    android:layout_height="100dp"
+                    android:layout_height="@dimen/_80sdp"
                     android:background="@color/colordarkgrey">
 
                     <TextView
@@ -234,9 +225,9 @@
                         android:layout_height="wrap_content"
                         android:text="Syllabus"
                         android:textColor="@android:color/white"
-                        android:textSize="25sp"
+                        android:textSize="@dimen/_18ssp"
                         android:textStyle="bold"
-                        android:padding="10dp"/>
+                        android:padding="@dimen/_8sdp"/>
 
                 </RelativeLayout>
 

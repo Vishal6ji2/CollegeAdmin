@@ -39,6 +39,8 @@ public class PlacementActivity extends AppCompatActivity {
 
         initviews();
 
+        setSupportActionBar(toolbar);
+
         backimg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -72,7 +72,7 @@ public class AddPlacementnewsActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
                 int cmpcount = edtcmpname.getText().length();
-                txtname.setText(cmpcount);
+                txtname.setText(cmpcount+"/15");
             }
 
             @Override
@@ -91,7 +91,7 @@ public class AddPlacementnewsActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
                 int titlecount = edttitle.getText().length();
-                txttitle.setText(titlecount);
+                txttitle.setText(titlecount+"/30");
 
             }
 
