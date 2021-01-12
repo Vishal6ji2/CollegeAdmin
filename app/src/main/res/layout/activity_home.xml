@@ -23,8 +23,6 @@
             android:id="@+id/home_profileimg"
             android:layout_width="@dimen/_42sdp"
             android:layout_height="match_parent"
-            android:scaleType="fitXY"
-            android:adjustViewBounds="true"
             android:src="@drawable/mbmlogo"/>
 
         <TextView
@@ -33,9 +31,9 @@
             android:layout_height="wrap_content"
             android:text="Hello, Mukesh Singhavi"
             android:textSize="@dimen/_15ssp"
+            android:fontFamily="@font/cc_regular"
             android:gravity="center"
             android:textStyle="bold"/>
-
 
     </com.google.android.material.appbar.MaterialToolbar>
 
@@ -45,11 +43,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_margin="@dimen/_2sdp"
+            android:layout_marginBottom="@dimen/_2sdp">
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
@@ -62,7 +61,7 @@
                     android:id="@+id/home_newsfeedlayout"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_80sdp"
-                    android:background="@color/colorpink">
+                    android:background="@android:color/holo_blue_dark">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -70,8 +69,43 @@
                         android:text="News feed"
                         android:textColor="@android:color/white"
                         android:textSize="@dimen/_18ssp"
-                        android:textStyle="bold"
+                        android:fontFamily="@font/cc_semibold"
                         android:padding="@dimen/_8sdp"/>
+
+                    <ImageView
+                        android:layout_width="@dimen/_50sdp"
+                        android:layout_height="@dimen/_50sdp"
+                        android:src="@drawable/selectedposticon"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentEnd="true"
+                        android:padding="@dimen/_8sdp"
+                        android:layout_margin="@dimen/_10sdp"/>
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:cardCornerRadius="@dimen/_10sdp"
+                        app:cardElevation="@dimen/_3sdp"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_margin="@dimen/_5sdp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Go"
+                        android:padding="@dimen/_3sdp"
+                        android:paddingEnd="@dimen/_5sdp"
+                        android:textColor="@android:color/holo_blue_dark"
+                        android:paddingStart="@dimen/_5sdp"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:background="@android:color/white"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentStart="true"
+                        app:drawableEndCompat="@drawable/arrowforblue" />
+
+                    </androidx.cardview.widget.CardView>
 
                 </RelativeLayout>
 
@@ -96,8 +130,46 @@
                         android:text="Notice"
                         android:textColor="@android:color/white"
                         android:textSize="@dimen/_18ssp"
-                        android:textStyle="bold"
+                        android:fontFamily="@font/cc_semibold"
                         android:padding="@dimen/_8sdp"/>
+
+
+                    <ImageView
+                        android:layout_width="@dimen/_50sdp"
+                        android:layout_height="@dimen/_50sdp"
+                        android:src="@drawable/newnoticeboard"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerInParent="true"
+                        android:layout_margin="@dimen/_10sdp"
+                        android:padding="@dimen/_8sdp"/>
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:cardCornerRadius="@dimen/_10sdp"
+                        app:cardElevation="@dimen/_3sdp"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_margin="@dimen/_5sdp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Go"
+                            android:padding="@dimen/_3sdp"
+                            android:paddingStart="@dimen/_5sdp"
+                            android:paddingEnd="@dimen/_5sdp"
+                            android:textColor="@android:color/holo_green_light"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:background="@android:color/white"
+                            android:layout_alignParentBottom="true"
+                            android:layout_alignParentStart="true"
+                            app:drawableEndCompat="@drawable/arrowforgreen" />
+
+                    </androidx.cardview.widget.CardView>
+
 
                 </RelativeLayout>
 
@@ -114,7 +186,7 @@
                     android:id="@+id/home_placementlayout"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_80sdp"
-                    android:background="@color/colorPrimaryDark">
+                    android:background="@android:color/holo_red_dark">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -123,7 +195,44 @@
                         android:textColor="@android:color/white"
                         android:padding="@dimen/_8sdp"
                         android:textSize="@dimen/_18ssp"
+                        android:fontFamily="@font/cc_semibold"
                         android:textStyle="bold"/>
+
+
+                    <ImageView
+                        android:layout_width="@dimen/_50sdp"
+                        android:layout_height="@dimen/_50sdp"
+                        android:src="@drawable/placementunicon"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_margin="@dimen/_10sdp"
+                        android:padding="@dimen/_8sdp"/>
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:cardCornerRadius="@dimen/_10sdp"
+                        app:cardElevation="@dimen/_3sdp"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_margin="@dimen/_5sdp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Go"
+                            android:padding="@dimen/_3sdp"
+                            android:paddingEnd="@dimen/_5sdp"
+                            android:textColor="@android:color/holo_red_dark"
+                            android:paddingStart="@dimen/_5sdp"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:background="@android:color/white"
+                            android:layout_alignParentBottom="true"
+                            android:layout_alignParentStart="true"
+                            app:drawableEndCompat="@drawable/arrowforred" />
+
+                    </androidx.cardview.widget.CardView>
 
                 </RelativeLayout>
 
@@ -149,7 +258,44 @@
                         android:textColor="@android:color/white"
                         android:textSize="@dimen/_18ssp"
                         android:textStyle="bold"
+                        android:fontFamily="@font/cc_semibold"
                         android:padding="@dimen/_8sdp"/>
+
+
+                    <ImageView
+                        android:layout_width="@dimen/_50sdp"
+                        android:layout_height="@dimen/_50sdp"
+                        android:src="@drawable/ebookicon"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_margin="@dimen/_10sdp"
+                        android:padding="@dimen/_8sdp"/>
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:cardCornerRadius="@dimen/_10sdp"
+                        app:cardElevation="@dimen/_3sdp"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_margin="@dimen/_5sdp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Go"
+                            android:padding="@dimen/_3sdp"
+                            android:paddingEnd="@dimen/_5sdp"
+                            android:textColor="@color/colorPrimary"
+                            android:paddingStart="@dimen/_5sdp"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:background="@android:color/white"
+                            android:layout_alignParentBottom="true"
+                            android:layout_alignParentStart="true"
+                            app:drawableEndCompat="@drawable/arrowfordark" />
+
+                    </androidx.cardview.widget.CardView>
 
                 </RelativeLayout>
 
@@ -166,7 +312,7 @@
                     android:id="@+id/home_ttlayout"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_80sdp"
-                    android:background="@android:color/holo_orange_light">
+                    android:background="@android:color/holo_orange_dark">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -174,8 +320,44 @@
                         android:text="Time-table"
                         android:textColor="@android:color/white"
                         android:textSize="@dimen/_18ssp"
-                        android:textStyle="bold"
+                        android:fontFamily="@font/cc_semibold"
                         android:padding="@dimen/_8sdp"/>
+
+
+                    <ImageView
+                        android:layout_width="@dimen/_50sdp"
+                        android:layout_height="@dimen/_50sdp"
+                        android:src="@drawable/calender"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_margin="@dimen/_10sdp"
+                        android:padding="@dimen/_8sdp"/>
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:cardCornerRadius="@dimen/_10sdp"
+                        app:cardElevation="@dimen/_3sdp"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_margin="@dimen/_5sdp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Go"
+                            android:padding="@dimen/_3sdp"
+                            android:paddingEnd="@dimen/_5sdp"
+                            android:textColor="@android:color/holo_orange_dark"
+                            android:paddingStart="@dimen/_5sdp"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:background="@android:color/white"
+                            android:layout_alignParentBottom="true"
+                            android:layout_alignParentStart="true"
+                            app:drawableEndCompat="@drawable/arrowfororange" />
+
+                    </androidx.cardview.widget.CardView>
 
                 </RelativeLayout>
 
@@ -200,8 +382,44 @@
                         android:text="Previous papers"
                         android:textColor="@android:color/white"
                         android:textSize="@dimen/_18ssp"
+                        android:fontFamily="@font/cc_semibold"
                         android:textStyle="bold"
                         android:padding="@dimen/_8sdp"/>
+
+                    <ImageView
+                        android:layout_width="@dimen/_50sdp"
+                        android:layout_height="@dimen/_50sdp"
+                        android:src="@drawable/pdficon"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_margin="@dimen/_10sdp"
+                        android:padding="@dimen/_10sdp"/>
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:cardCornerRadius="@dimen/_10sdp"
+                        app:cardElevation="@dimen/_3sdp"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_margin="@dimen/_5sdp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Go"
+                            android:padding="@dimen/_3sdp"
+                            android:paddingEnd="@dimen/_5sdp"
+                            android:textColor="@android:color/holo_purple"
+                            android:paddingStart="@dimen/_5sdp"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:background="@android:color/white"
+                            android:layout_alignParentBottom="true"
+                            android:layout_alignParentStart="true"
+                            app:drawableEndCompat="@drawable/arrowforpurple" />
+
+                    </androidx.cardview.widget.CardView>
 
                 </RelativeLayout>
 
@@ -226,8 +444,43 @@
                         android:text="Syllabus"
                         android:textColor="@android:color/white"
                         android:textSize="@dimen/_18ssp"
-                        android:textStyle="bold"
+                        android:fontFamily="@font/cc_semibold"
                         android:padding="@dimen/_8sdp"/>
+
+                    <ImageView
+                        android:layout_width="@dimen/_50sdp"
+                        android:layout_height="@dimen/_50sdp"
+                        android:src="@drawable/pdficon"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_margin="@dimen/_10sdp"
+                        android:padding="@dimen/_8sdp"/>
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:cardCornerRadius="@dimen/_10sdp"
+                        app:cardElevation="@dimen/_3sdp"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_margin="@dimen/_5sdp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Go"
+                            android:padding="@dimen/_5sdp"
+                            android:paddingEnd="@dimen/_5sdp"
+                            android:textColor="@color/colordarkgrey"
+                            android:paddingStart="@dimen/_5sdp"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:background="@android:color/white"
+                            android:layout_alignParentBottom="true"
+                            android:layout_alignParentStart="true"
+                            app:drawableEndCompat="@drawable/arrowforgray" />
+
+                    </androidx.cardview.widget.CardView>
 
                 </RelativeLayout>
 

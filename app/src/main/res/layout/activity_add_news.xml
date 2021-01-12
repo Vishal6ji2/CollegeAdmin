@@ -29,8 +29,7 @@
                 android:layout_height="wrap_content"
                 android:text="Add News"
                 android:textSize="@dimen/_15ssp"
-                android:textColor="@color/colorverydarkgrey"
-                android:textStyle="bold"/>
+                android:textColor="@color/colorverydarkgrey"/>
 
         </com.google.android.material.appbar.MaterialToolbar>
 

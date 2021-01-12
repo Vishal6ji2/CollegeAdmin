@@ -17,13 +17,14 @@
         android:id="@+id/placement_toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        app:menu="@menu/menuadd">
+        app:menu="@menu/menuaddwhite"
+        android:background="@color/colorPrimaryDark">
 
         <ImageView
             android:id="@+id/placement_backimg"
             android:layout_width="@dimen/_22sdp"
             android:layout_height="@dimen/_22sdp"
-            android:src="@drawable/arrowbackblack"/>
+            android:src="@drawable/arrowback"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -32,7 +33,7 @@
             android:textSize="@dimen/_15ssp"
             android:textStyle="bold"
             android:gravity="center"
-            android:textColor="@color/colorverydarkgrey"/>
+            android:textColor="@android:color/white"/>
 
     </com.google.android.material.appbar.MaterialToolbar>
 

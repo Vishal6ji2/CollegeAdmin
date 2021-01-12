@@ -17,20 +17,21 @@
         android:id="@+id/notice_toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        app:menu="@menu/menuadd">
+        app:menu="@menu/menuaddwhite"
+        android:background="@color/colorPrimaryDark">
 
         <ImageView
             android:id="@+id/notice_backimg"
             android:layout_width="@dimen/_22sdp"
             android:layout_height="@dimen/_22sdp"
-            android:src="@drawable/arrowbackblack"/>
+            android:src="@drawable/arrowback"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Notice"
             android:textStyle="bold"
-            android:textColor="@color/colorverydarkgrey"
+            android:textColor="@android:color/white"
             android:textSize="@dimen/_15ssp"
             android:gravity="center"/>
 

@@ -29,7 +29,6 @@
                 android:layout_height="wrap_content"
                 android:text="Add Ebooks"
                 android:textSize="@dimen/_15sdp"
-                android:textStyle="bold"
                 android:textColor="@color/colorverydarkgrey"/>
 
         </com.google.android.material.appbar.MaterialToolbar>

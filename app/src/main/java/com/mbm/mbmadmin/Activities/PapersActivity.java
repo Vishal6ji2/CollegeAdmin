@@ -88,14 +88,14 @@ public class PapersActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menuadd,menu);
+        getMenuInflater().inflate(R.menu.menuaddwhite,menu);
 
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.menuadditem){
+        if (item.getItemId() == R.id.menuadditemwhite){
             Toast.makeText(this, "paper clicked", Toast.LENGTH_SHORT).show();
 
             Intent intent =  new Intent(Intent.ACTION_GET_CONTENT);

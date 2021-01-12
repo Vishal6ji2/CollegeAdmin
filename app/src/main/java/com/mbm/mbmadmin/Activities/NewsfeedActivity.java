@@ -84,14 +84,14 @@ public class NewsfeedActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
-        getMenuInflater().inflate(R.menu.menuadd,menu);
+        getMenuInflater().inflate(R.menu.menuaddwhite,menu);
 
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.menuadditem){
+        if (item.getItemId() == R.id.menuadditemwhite){
             startActivity(new Intent(NewsfeedActivity.this,AddNewsActivity.class));
             return true;
         }

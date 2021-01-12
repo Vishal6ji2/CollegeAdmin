@@ -77,8 +77,8 @@ public class TimetableAdapter extends RecyclerView.Adapter<TimetableAdapter.View
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            txtsem = itemView.findViewById(R.id.customtt_txtsem);
-            semimg = itemView.findViewById(R.id.customtt_semimg);
+            txtsem = itemView.findViewById(R.id.customtime_txtsem);
+            semimg = itemView.findViewById(R.id.customtime_semimg);
         }
     }
 }
