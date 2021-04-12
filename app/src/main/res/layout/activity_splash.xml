@@ -5,37 +5,56 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".SplashActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:weightSum="2">
 
 
-    <ImageView
-        android:layout_width="@dimen/_100sdp"
-        android:layout_height="@dimen/_100sdp"
-        android:src="@drawable/mbmlogo"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:layout_gravity="center"
-        android:layout_marginTop="@dimen/_100sdp"/>
+        android:gravity="center">
 
-    <TextView
+        <com.mikhaellopez.circularimageview.CircularImageView
+            android:id="@+id/splash_logoimg"
+            android:layout_width="@dimen/_100sdp"
+            android:layout_height="@dimen/_100sdp"
+            android:src="@drawable/mbmlogo"
+            android:padding="@dimen/_2sdp"
+            android:layout_gravity="center"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearlayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="MBM "
-        android:gravity="center"
-        android:textSize="@dimen/_22ssp"
-        android:padding="@dimen/_1sdp"
-        android:layout_marginTop="@dimen/_15sdp"
-        android:textStyle="bold"
-        android:textColor="@android:color/black"/>
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="M.B.M. Engineering College\nAdmin app"
+            android:textColor="@color/colorPrimary"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:textSize="@dimen/_15ssp"
+            android:layout_gravity="center"/>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/_4sdp"
-        android:text="Admin "
-        android:gravity="center"
-        android:textSize="20sp"
-        android:textStyle="normal"
-        android:textColor="@color/colorverydarkgrey"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Faith &amp; Labour"
+            android:textColor="@color/colordarkgrey"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:textSize="@dimen/_12ssp"
+            android:layout_gravity="center"/>
 
+    </LinearLayout>
 
 </LinearLayout>

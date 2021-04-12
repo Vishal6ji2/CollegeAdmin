@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".Fragments.PapersFragment">
+
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/paperfrag_card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardElevation="@dimen/_2sdp"
+        app:cardUseCompatPadding="true"
+        android:layout_margin="@dimen/_3sdp">
+
+        <androidx.appcompat.widget.AppCompatSpinner
+            android:id="@+id/paperfrag_spinsubject"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:spinnerMode="dialog"
+            android:splitMotionEvents="true"/>
+
+    </androidx.cardview.widget.CardView>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/paperfrag_fabadd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:fabSize="mini"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        app:backgroundTint="@color/colorPrimaryDark"
+        android:src="@drawable/addicon"
+        app:tint="@android:color/white"
+        android:layout_margin="@dimen/_5sdp"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/paperfrag_recyclerview"
+        android:layout_below="@id/paperfrag_card"/>
+
+</RelativeLayout>

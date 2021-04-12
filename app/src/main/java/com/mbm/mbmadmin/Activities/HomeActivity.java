@@ -1,10 +1,14 @@
 package com.mbm.mbmadmin.Activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityOptionsCompat;
+import androidx.core.view.ViewCompat;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -25,7 +29,7 @@ public class HomeActivity extends AppCompatActivity {
 
     TextView txtname;
 
-    RelativeLayout newslayout,noticelayout,placementlayout,ttlayout,paperlayout,syllabuslayout,ebooklayout;
+    RelativeLayout newslayout,noticelayout,placementlayout,ttlayout,paperlayout,syllabuslayout,ebooklayout,studentslayout;
 
 
     @Override
@@ -37,6 +41,13 @@ public class HomeActivity extends AppCompatActivity {
 
         setSupportActionBar(toolbar);
 
+
+        studentslayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(HomeActivity.this,StudentsListActivity.class));
+            }
+        });
 
         newslayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,13 +85,13 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-        syllabuslayout.setOnClickListener(new View.OnClickListener() {
+      /*  syllabuslayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(HomeActivity.this,SyllabusActivity.class));
             }
         });
-
+*/
         ttlayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -88,6 +99,22 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
+        profileimg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HomeActivity.this,ProfileActivity.class);
+                ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(HomeActivity.this,profileimg, ViewCompat.getTransitionName(profileimg));
+
+                startActivity(intent,optionsCompat.toBundle());
+            }
+        });
+
+        txtname.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(HomeActivity.this,ProfileActivity.class));
+            }
+        });
 
     }
 
@@ -96,6 +123,15 @@ public class HomeActivity extends AppCompatActivity {
 
         getMenuInflater().inflate(R.menu.menu,menu);
 
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.menu){
+            startActivity(new Intent(HomeActivity.this,LoginActivity.class));
+            finish();
+        }
         return true;
     }
 
@@ -113,7 +149,7 @@ public class HomeActivity extends AppCompatActivity {
         placementlayout = findViewById(R.id.home_placementlayout);
         ttlayout = findViewById(R.id.home_ttlayout);
         paperlayout = findViewById(R.id.home_paperslayout);
-        syllabuslayout = findViewById(R.id.home_syllabuslayout);
+        studentslayout = findViewById(R.id.home_studentslayout);
 
     }
 }

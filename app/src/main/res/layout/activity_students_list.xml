@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activities.StudentsListActivity">
+
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/students_card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardElevation="@dimen/_3sdp">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:id="@+id/students_toolbar"
+            android:background="@color/colorPrimary">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/students_backimg"
+                    android:layout_width="@dimen/_24sdp"
+                    android:layout_height="@dimen/_24sdp"
+                    android:src="@drawable/arrowback"
+                    android:background="?attr/selectableItemBackground"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Students status"
+                    android:textSize="@dimen/_16ssp"
+                    android:fontFamily="@font/cc_semibold"
+                    android:textColor="@android:color/white"
+                    android:gravity="center"
+                    android:layout_toStartOf="@id/students_checkimg"/>
+
+                <ImageView
+                    android:id="@+id/students_uploadimg"
+                    android:layout_width="@dimen/_24sdp"
+                    android:layout_height="@dimen/_24sdp"
+                    android:src="@drawable/xlsicon"
+                    android:layout_marginEnd="@dimen/_5sdp"
+                    android:layout_toStartOf="@id/students_checkimg"
+                    android:background="?attr/selectableItemBackground"/>
+
+                <ImageView
+                    android:id="@+id/students_checkimg"
+                    android:layout_width="@dimen/_24sdp"
+                    android:layout_height="@dimen/_24sdp"
+                    android:src="@drawable/correctwhiteicon"
+                    android:layout_alignParentEnd="true"
+                    android:background="?attr/selectableItemBackground"/>
+
+            </RelativeLayout>
+
+        </com.google.android.material.appbar.MaterialToolbar>
+
+    </androidx.cardview.widget.CardView>
+
+    <ProgressBar
+        android:id="@+id/students_progressbar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="invisible"/>
+
+    <EditText
+        android:id="@+id/students_edtsearch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Search students"
+        android:inputType="textPersonName"
+        android:layout_margin="@dimen/_10sdp"
+        tools:ignore="UnusedAttribute"
+        android:layout_below="@id/students_card"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/students_recyclerview"
+        android:layout_below="@id/students_edtsearch"/>
+
+</RelativeLayout>

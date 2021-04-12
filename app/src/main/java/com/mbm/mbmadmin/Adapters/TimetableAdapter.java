@@ -22,7 +22,7 @@ public class TimetableAdapter extends RecyclerView.Adapter<TimetableAdapter.View
     Context context;
     ArrayList<TimetableSuitcase> arrtimelist = new ArrayList<>();
 
-    public TimetableAdapter(Context context, ArrayList<TimetableSuitcase> arrtimelist) {
+    public TimetableAdapter(@NonNull Context context, @NonNull ArrayList<TimetableSuitcase> arrtimelist) {
         this.context = context;
         this.arrtimelist = arrtimelist;
     }

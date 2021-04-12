@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activities.AddEbooksActivity"
-    android:orientation="vertical">
+    android:id="@+id/addebook_parentlayout"
+    android:background="@android:color/white">
 
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/addebook_card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardElevation="@dimen/_3sdp">
@@ -22,30 +23,58 @@
                 android:id="@+id/addebook_backimg"
                 android:layout_width="@dimen/_22sdp"
                 android:layout_height="@dimen/_22sdp"
-                android:src="@drawable/arrowbackblack"/>
+                android:src="@drawable/closeicon"/>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Add Ebooks"
                 android:textSize="@dimen/_15sdp"
+                android:gravity="center"
                 android:textColor="@color/colorverydarkgrey"/>
 
         </com.google.android.material.appbar.MaterialToolbar>
 
     </androidx.cardview.widget.CardView>
 
+    <RelativeLayout
+        android:id="@+id/addebook_imglayout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_100sdp"
+        android:layout_below="@id/addebook_card">
+
+        <ImageView
+            android:id="@+id/addebook_bookimg"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitCenter"
+            android:adjustViewBounds="true"/>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/addebook_fabcam"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fabSize="mini"
+            app:backgroundTint="@android:color/white"
+            android:src="@drawable/cameraicon"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"/>
+
+    </RelativeLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_margin="@dimen/_8sdp">
+        android:layout_margin="@dimen/_8sdp"
+        android:layout_below="@id/addebook_imglayout">
 
         <EditText
             android:id="@+id/addebook_edtbname"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Book Name"
+            android:inputType="textPersonName"
             android:textColor="@color/colorverydarkgrey"
             android:maxLength="30"
             android:maxLines="1"/>
@@ -64,6 +93,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Author's Name"
+            android:inputType="textPersonName"
             android:textColor="@color/colorverydarkgrey"
             android:maxLength="30"
             android:maxLines="1"/>
@@ -82,17 +112,38 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Book Edition"
+            android:inputType="textPersonName"
             android:textColor="@color/colorverydarkgrey"
             android:maxLength="20"
             android:maxLines="1"/>
 
-        <ImageView
-            android:id="@+id/addebook_addimg"
+        <LinearLayout
+            android:id="@+id/addebook_llfile"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_80sdp"
-            android:src="@drawable/addicon"
-            android:layout_marginTop="@dimen/_8sdp"
-            android:layout_margin="@dimen/_10sdp"/>
+            android:layout_height="wrap_content"
+            android:background="@color/colorlightgray"
+            android:orientation="horizontal"
+            android:padding="@dimen/_3sdp">
+
+            <ImageView
+                android:id="@+id/addebook_fileimg"
+                android:layout_width="@dimen/_22sdp"
+                android:layout_height="@dimen/_22sdp"
+                android:background="@drawable/addicon"
+                android:layout_gravity="center"
+                android:padding="@dimen/_2sdp"
+                android:layout_marginStart="@dimen/_5sdp"/>
+
+            <TextView
+                android:id="@+id/addebook_txtfilename"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="add an attachment"
+                android:gravity="center"
+                android:textColor="@color/colorverydarkgrey"
+                android:layout_gravity="center"/>
+
+        </LinearLayout>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/addebook_btnupload"
@@ -105,4 +156,11 @@
 
     </LinearLayout>
 
-</LinearLayout>
+    <ProgressBar
+        android:id="@+id/addebook_progressbar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="invisible"/>
+
+</RelativeLayout>

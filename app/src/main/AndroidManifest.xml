@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.mbm.mbmadmin">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -11,16 +12,22 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:largeHeap="true"
+        android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".Activities.StudentListActivity"></activity>
-        <activity android:name=".Activities.AddEbooksActivity" />
-        <activity android:name=".Activities.AddNewsActivity" />
-        <activity android:name=".Activities.AddPlacementnewsActivity" />
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
+        <activity android:name=".Activities.StudentsListActivity">
+            <intent-filter>
+            <action android:name="android.intent.action.VIEW" />
+            <category android:name="android.intent.category.DEFAULT" />
+        </intent-filter>
+        </activity>
+        <activity android:name=".Activities.ProfileActivity" />
+        <activity android:name=".Activities.FullPlacementNewsActivity" />
         <activity android:name=".Activities.PapersActivity" />
         <activity android:name=".Activities.EbooksActivity" />
-        <activity android:name=".Activities.SyllabusActivity" />
         <activity android:name=".Activities.TimetableActivity" />
         <activity android:name=".Activities.PlacementActivity" />
         <activity android:name=".Activities.NoticeActivity" />

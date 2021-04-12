@@ -17,7 +17,6 @@
         android:id="@+id/paper_toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        app:menu="@menu/menuaddwhite"
         android:background="@color/colorPrimaryDark">
 
         <ImageView
@@ -26,38 +25,25 @@
             android:layout_height="@dimen/_22sdp"
             android:src="@drawable/arrowback"/>
 
-        <TextView
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/paper_tablayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Past papers"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/_15ssp"
-            android:gravity="center"
-            android:textStyle="bold"/>
+            android:layout_height="match_parent"
+            app:tabMode="fixed"
+            app:tabIndicatorColor="@android:color/white"
+            app:tabIndicatorHeight="@dimen/_2sdp"
+            app:tabSelectedTextColor="@android:color/white"
+            app:tabTextColor="@android:color/darker_gray"
+            android:background="@color/colorPrimaryDark"/>
 
     </com.google.android.material.appbar.MaterialToolbar>
 
     </androidx.cardview.widget.CardView>
 
-    <androidx.cardview.widget.CardView
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/paper_viewpager"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:cardElevation="@dimen/_3sdp"
-        app:cardUseCompatPadding="true"
-        android:layout_margin="@dimen/_5sdp">
+        android:layout_height="match_parent"/>
 
-    <androidx.appcompat.widget.AppCompatSpinner
-        android:id="@+id/paper_spinsubject"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:spinnerMode="dialog"
-        android:splitMotionEvents="true"/>
-
-    </androidx.cardview.widget.CardView>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/paper_recyclerview"/>
 
 </LinearLayout>

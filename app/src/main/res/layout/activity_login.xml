@@ -7,87 +7,125 @@
     android:layout_height="match_parent"
     tools:context=".Activities.LoginActivity"
     android:orientation="vertical"
-    android:layout_margin="@dimen/_8sdp"
-    android:weightSum="2">
+    android:weightSum="2"
+    android:layout_margin="@dimen/_10sdp">
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.5"
+        android:layout_weight="0.9"
+        android:orientation="vertical"
+        android:layout_gravity="bottom"
         android:gravity="center">
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_100sdp"
-        android:src="@drawable/mbmlogo"/>
+        <ImageView
+            android:layout_width="@dimen/_100sdp"
+            android:layout_height="@dimen/_100sdp"
+            android:src="@drawable/mbmlogo"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Welcome To MBM,"
+            android:textSize="@dimen/_17ssp"
+            android:gravity="center"
+            android:textColor="@android:color/black"
+            android:padding="@dimen/_5sdp"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Let's Verify To Continue"
+            android:gravity="center"
+            android:textStyle="normal"
+            android:padding="@dimen/_5sdp"/>
 
     </LinearLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:orientation="vertical"
-        android:gravity="center"
-        android:layout_weight="1.5">
+        android:layout_weight="1"
+        android:gravity="center">
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/login_emaillayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Email id">
+            android:hint="Enter Registered Email -id">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/login_edtemailid"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@android:color/white"
-                android:inputType="textEmailAddress"/>
+                android:inputType="textEmailAddress"
+                android:maxLines="1"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
+        <TextView
+            android:id="@+id/login_txtsendotp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Password"
-            app:passwordToggleEnabled="true">
+            android:text="@string/send_otp"
+            android:gravity="end"
+            android:textSize="@dimen/_13ssp"
+            android:padding="@dimen/_5sdp"
+            android:textColor="@color/colorPrimaryDark"
+            android:layout_below="@id/login_emaillayout"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/login_otplayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter 6-digit OTP"
+            android:layout_below="@id/login_txtsendotp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/login_edtpassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@android:color/white"
-                android:inputType="textPassword"/>
+                android:inputType="number"
+                android:maxLength="6"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
+
         <TextView
-            android:id="@+id/login_txtforgotpwd"
+            android:id="@+id/login_txtspace"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Forgot Password?"
+            android:text="@string/send_otp"
             android:gravity="end"
             android:textSize="@dimen/_13ssp"
+            android:padding="@dimen/_5sdp"
+            android:visibility="invisible"
             android:textColor="@color/colorPrimaryDark"
-            android:layout_marginTop="@dimen/_8sdp"/>
+            android:layout_below="@id/login_otplayout"/>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/login_btnlogin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Login"
+            android:text="Verify"
             android:textAllCaps="false"
-            android:textSize="@dimen/_16ssp"
-            android:backgroundTint="@color/colorpink"
+            android:enabled="false"
+            android:layout_below="@id/login_txtspace"
+            android:textSize="@dimen/_15ssp"
             android:textColor="@android:color/white"
             app:cornerRadius="@dimen/_3sdp"
-            android:padding="@dimen/_8sdp"
-            android:layout_marginTop="@dimen/_18sdp"/>
+            android:padding="@dimen/_8sdp"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
+            android:visibility="gone"
             android:layout_marginTop="@dimen/_8sdp"
             android:padding="@dimen/_8sdp">
 
@@ -101,12 +139,12 @@
                 android:id="@+id/login_txtregister"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Register Now"
+                android:text=" Register Now"
                 android:textSize="@dimen/_14ssp"
                 android:textColor="@color/colorPrimaryDark" />
 
         </LinearLayout>
 
-    </LinearLayout>
+    </RelativeLayout>
 
 </LinearLayout>

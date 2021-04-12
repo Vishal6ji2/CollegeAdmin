@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:id="@+id/studentprofile_layout"
+    android:background="@drawable/bottomsheetrounded">
+
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardElevation="@dimen/_3sdp">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/studentprofile_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/studentprofile_cancelimg"
+                android:layout_width="@dimen/_22sdp"
+                android:layout_height="@dimen/_22sdp"
+                android:src="@drawable/closeicon"
+                android:layout_centerVertical="true"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Student Profile"
+                android:gravity="center"
+                android:fontFamily="@font/cc_regular"
+                android:textSize="@dimen/_16ssp"
+                android:textColor="@android:color/black"
+                android:layout_centerVertical="true"/>
+
+            <!--<TextView
+                android:id="@+id/profile_edit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Edit"
+                android:textColor="@android:color/white"
+                android:layout_alignParentEnd="true"
+                android:textSize="@dimen/_14ssp"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="5dp"
+                android:background="?attr/selectableItemBackground"/>-->
+
+        </RelativeLayout>
+
+    </com.google.android.material.appbar.MaterialToolbar>
+
+    </androidx.cardview.widget.CardView>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.mikhaellopez.circularimageview.CircularImageView
+            android:id="@+id/studentprofile_profileimg"
+            android:layout_width="@dimen/_100sdp"
+            android:layout_height="@dimen/_100sdp"
+            android:layout_gravity="center"
+            android:layout_centerInParent="true"/>
+
+
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_margin="@dimen/_4sdp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Name"
+                android:textColor="@color/colorverydarkgrey"
+                android:textSize="@dimen/_13ssp"
+                android:padding="@dimen/_4sdp"/>
+
+            <TextView
+                android:id="@+id/studentprofile_txtname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Vishal Kumavat"
+                android:padding="@dimen/_8sdp"
+                android:textSize="@dimen/_14ssp"
+                android:textColor="@color/colorPrimaryDark"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Branch"
+                android:textColor="@color/colorverydarkgrey"
+                android:textSize="@dimen/_13ssp"
+                android:padding="@dimen/_4sdp"/>
+
+            <TextView
+                android:id="@+id/studentprofile_txtbranch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Computer Science &amp; Engineering"
+                android:padding="@dimen/_8sdp"
+                android:textSize="@dimen/_14ssp"
+                android:textColor="@color/colorPrimaryDark"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Email-id"
+                android:textColor="@color/colorverydarkgrey"
+                android:textSize="@dimen/_13ssp"
+                android:padding="@dimen/_4sdp"/>
+
+            <TextView
+                android:id="@+id/studentprofile_txtemail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Vishal6kumavat7@gmail.com"
+                android:padding="@dimen/_8sdp"
+                android:textSize="@dimen/_14ssp"
+                android:textColor="@color/colorPrimaryDark"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Phone/mob no."
+                android:textColor="@color/colorverydarkgrey"
+                android:textSize="@dimen/_13ssp"
+                android:padding="@dimen/_4sdp"/>
+
+            <TextView
+                android:id="@+id/studentprofile_txtmob"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="+917239973921"
+                android:padding="@dimen/_8sdp"
+                android:textSize="@dimen/_14ssp"
+                android:textColor="@color/colorPrimaryDark"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+</LinearLayout>

@@ -14,11 +14,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.mbm.mbmadmin.Activities.PapersActivity;
 import com.mbm.mbmadmin.R;
 import com.mbm.mbmadmin.Suitcases.PaperSuitcase;
 
-import java.net.URL;
 import java.util.ArrayList;
 
 public class PaperAdapter extends RecyclerView.Adapter<PaperAdapter.ViewHolder> {
@@ -40,7 +38,7 @@ public class PaperAdapter extends RecyclerView.Adapter<PaperAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
 
-        holder.pdfimg.setImageResource(R.drawable.pdficon);
+        holder.pdfimg.setImageResource(R.drawable.fileicon);
         holder.txtpdftime.setText(arrpaperlist.get(position).pdftime);
 
 

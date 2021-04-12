@@ -7,4 +7,20 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="BottomSheetDialogTheme" parent="Theme.Design.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/BottomSheetStyle</item>
+    </style>
+
+    <style name="BottomSheetStyle" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+
+    <style name="AppTheme.ProgressColor" parent="@style/Theme.MaterialComponents">
+        <item name="progressBarStyle">@color/colorPrimary</item>
+    </style>
+
+    <style name="circleimage">
+        <item name="cornerSize">50%</item>
+    </style>
+
 </resources>

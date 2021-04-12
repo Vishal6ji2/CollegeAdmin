@@ -41,15 +41,30 @@ public class NewsPostAdapter extends RecyclerView.Adapter<NewsPostAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
 
-        holder.profileimg.setImageResource(arrnewspostlist.get(position).profileimg);
 
-        holder.postimg.setImageResource(arrnewspostlist.get(position).postimg);
+        if (arrnewspostlist.get(position).postimg == 0){
+            holder.postimg.setVisibility(View.GONE);
+            holder.txtdetails.setText(arrnewspostlist.get(position).txtdetails);
 
-        holder.profilename.setText(arrnewspostlist.get(position).profilename);
-        holder.txtheading.setText(arrnewspostlist.get(position).txtheading);
-        holder.txtdetails.setText(arrnewspostlist.get(position).txtdetails);
+        }else if (arrnewspostlist.get(position).txtdetails == null){
+            holder.postimg.setImageResource(arrnewspostlist.get(position).postimg);
+            holder.txtdetails.setVisibility(View.GONE);
+        }else if (arrnewspostlist.get(position).txtheading == null && arrnewspostlist.get(position).txtdetails == null){
+            holder.postimg.setImageResource(arrnewspostlist.get(position).postimg);
+            holder.txtdetails.setVisibility(View.GONE);
+            holder.txtheading.setVisibility(View.GONE);
+        }else {
+            holder.postimg.setImageResource(arrnewspostlist.get(position).postimg);
+            holder.txtheading.setText(arrnewspostlist.get(position).txtheading);
+            holder.txtdetails.setText(arrnewspostlist.get(position).txtdetails);
+        }
         holder.datetime.setText(arrnewspostlist.get(position).datetime);
         holder.timeago.setText(arrnewspostlist.get(position).timeago);
+        holder.profileimg.setImageResource(arrnewspostlist.get(position).profileimg);
+        holder.profilename.setText(arrnewspostlist.get(position).profilename);
+        holder.txtheading.setText(arrnewspostlist.get(position).txtheading);
+
+
 
         holder.postimg.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
@@ -99,7 +114,6 @@ public class NewsPostAdapter extends RecyclerView.Adapter<NewsPostAdapter.ViewHo
                 return true;
             }
         });
-
 
     }
 

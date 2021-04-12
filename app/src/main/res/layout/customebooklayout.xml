@@ -9,7 +9,7 @@
     android:background="?attr/selectableItemBackground">
 
     <androidx.cardview.widget.CardView
-        android:layout_width="@dimen/_75sdp"
+        android:layout_width="@dimen/_60sdp"
         android:layout_height="match_parent"
         app:cardCornerRadius="@dimen/_5sdp"
         app:cardElevation="@dimen/_3sdp">
@@ -19,7 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="fitXY"
-            android:src="@drawable/designerimg"
+            android:src="@drawable/screenshot"
             android:layout_gravity="center"
             android:background="@color/colorPrimaryDark"/>
 

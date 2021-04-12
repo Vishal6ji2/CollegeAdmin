@@ -4,9 +4,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatSpinner;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
 import android.database.Cursor;
@@ -21,7 +23,11 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.material.appbar.MaterialToolbar;
+import com.google.android.material.tabs.TabLayout;
 import com.mbm.mbmadmin.Adapters.PaperAdapter;
+import com.mbm.mbmadmin.Adapters.TabsViewpagerAdapter;
+import com.mbm.mbmadmin.Fragments.PapersFragment;
+import com.mbm.mbmadmin.Fragments.SyllabusFragment;
 import com.mbm.mbmadmin.R;
 import com.mbm.mbmadmin.Suitcases.PaperSuitcase;
 
@@ -34,13 +40,10 @@ public class PapersActivity extends AppCompatActivity {
 
     ImageView backimg;
 
-    RecyclerView recyclerView;
 
-    AppCompatSpinner spinbranch;
+    ViewPager viewPager;
 
-    ArrayList<PaperSuitcase> arrpaperlist = new ArrayList<>();
-
-    ArrayList<String> arrsubjects = new ArrayList<>();
+    TabLayout tabLayout;
 
 
     @Override
@@ -59,105 +62,24 @@ public class PapersActivity extends AppCompatActivity {
             }
         });
 
+        TabsViewpagerAdapter viewpagerAdapter = new TabsViewpagerAdapter(getSupportFragmentManager());
 
-        addData("2014");
-        addData("2015");
-        addData("2016");
-        addData("2017");
-        addData("2018");
-        addData("2019");
-        addData("2020");
-        addData("2013");
-        addData("2012");
+        viewpagerAdapter.addFragment(new PapersFragment(),"Past papers");
+        viewpagerAdapter.addFragment(new SyllabusFragment(),"Syllabus");
 
-        recyclerView.setLayoutManager(new GridLayoutManager(this,3));
-        recyclerView.setAdapter(new PaperAdapter(this,arrpaperlist));
+        viewPager.setAdapter(viewpagerAdapter);
+        tabLayout.setupWithViewPager(viewPager);
 
-
-        arrsubjects.add("C++");
-        arrsubjects.add("Data structure & Algorithm");
-        arrsubjects.add("Discrete Structures");
-        arrsubjects.add("Python programming");
-        arrsubjects.add("Computer Networks");
-
-        ArrayAdapter<String> subAdapter = new ArrayAdapter<>(this,android.R.layout.simple_spinner_dropdown_item,arrsubjects);
-
-        spinbranch.setAdapter(subAdapter);
-
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menuaddwhite,menu);
-
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.menuadditemwhite){
-            Toast.makeText(this, "paper clicked", Toast.LENGTH_SHORT).show();
-
-            Intent intent =  new Intent(Intent.ACTION_GET_CONTENT);
-            intent.setType("application/pdf");
-            startActivityForResult(intent,10);
-
-
-            return true;
-        }
-        return false;
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if (requestCode ==10 && resultCode ==RESULT_OK) {
-
-            Uri uri;
-            if (data != null) {
-                uri = data.getData();
-
-                String uristring = uri.toString();
-                File file = new File(uristring);
-                String mypath = file.getAbsolutePath();
-                String filename = null;
-
-                if (uristring.startsWith("content://")) {
-                    Cursor cursor = null;
-
-                    try {
-                        cursor = this.getContentResolver().query(uri, null, null, null, null);
-                        if (cursor != null && cursor.moveToFirst()) {
-                            filename = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
-                            Toast.makeText(this, "Successfully ="+filename, Toast.LENGTH_SHORT).show();
-                        }
-
-                    } finally {
-                        cursor.close();
-                    }
-                } else if (uristring.startsWith("file://")) {
-                    filename = file.getName();
-                    Toast.makeText(this, "Successfully ="+filename, Toast.LENGTH_SHORT).show();
-                }
-            }
-        }
-        super.onActivityResult(requestCode,resultCode,data);
-    }
-
-    private void addData(String pdftime) {
-        PaperSuitcase paperSuitcase = new PaperSuitcase();
-        paperSuitcase.pdftime = pdftime;
-
-        arrpaperlist.add(paperSuitcase);
     }
 
     private void initviews() {
+
+        tabLayout = findViewById(R.id.paper_tablayout);
+        viewPager = findViewById(R.id.paper_viewpager);
 
         toolbar = findViewById(R.id.paper_toolbar);
 
         backimg = findViewById(R.id.paper_backimg);
 
-        spinbranch = findViewById(R.id.paper_spinsubject);
-
-        recyclerView = findViewById(R.id.paper_recyclerview);
     }
 }

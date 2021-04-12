@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="?attr/selectableItemBackground"
+    android:padding="@dimen/_7sdp">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/customstudent_profileimg"
+        android:layout_width="@dimen/_45sdp"
+        android:layout_height="@dimen/_45sdp"
+        android:src="@drawable/profilefive"
+        android:layout_centerVertical="true"
+        app:shapeAppearanceOverlay="@style/circleimage"
+        android:background="@color/colorlightgray"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/customstudent_profileimg"
+        android:layout_toStartOf="@id/customstudent_checkbox"
+        android:orientation="vertical"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="@dimen/_10sdp">
+
+    <TextView
+        android:id="@+id/customstudent_txtname"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Vishal Kumavat"
+        android:textSize="@dimen/_13ssp"
+        android:textColor="@android:color/black"
+        android:maxLines="1"/>
+
+    <TextView
+        android:id="@+id/customstudent_rollno"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="J19UCSE4021"/>
+
+    </LinearLayout>
+
+    <com.google.android.material.checkbox.MaterialCheckBox
+        android:id="@+id/customstudent_checkbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"/>
+
+</RelativeLayout>
