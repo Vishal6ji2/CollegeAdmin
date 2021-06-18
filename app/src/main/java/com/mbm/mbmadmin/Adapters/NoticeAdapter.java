@@ -7,13 +7,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.LinearSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.SnapHelper;
 
+import com.bumptech.glide.Glide;
 import com.mbm.mbmadmin.R;
+import com.mbm.mbmadmin.Suitcases.NoticeFetchResponse;
 import com.mbm.mbmadmin.Suitcases.NoticeSuitcase;
 
 import java.util.ArrayList;
@@ -22,9 +30,16 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.ViewHolder
 
     Context context;
 
-    ArrayList<NoticeSuitcase> arrnoticelist = new ArrayList<>();
+    ArrayList<NoticeFetchResponse.Noticetable> arrnoticelist;
 
-    public NoticeAdapter(Context context, ArrayList<NoticeSuitcase> arrnoticelist) {
+    ArrayList<String> arrimglist;
+
+    ImageView[] dots;
+
+    int dotscount;
+
+
+    public NoticeAdapter(@NonNull Context context, @NonNull ArrayList<NoticeFetchResponse.Noticetable> arrnoticelist) {
         this.context = context;
         this.arrnoticelist = arrnoticelist;
     }
@@ -38,75 +53,148 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.ViewHolder
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
 
-        holder.imageView.setImageResource(arrnoticelist.get(position).img);
-        holder.imageView.startAnimation(AnimationUtils.loadAnimation(context, R.anim.tabsanim));
-//        holder.textView.setText(arrnoticelist.get(position).text);
+        if (arrnoticelist!=null) {
 
-        holder.imageView.setOnLongClickListener(new View.OnLongClickListener() {
+            arrimglist = arrnoticelist.get(position).getImages();
+
+            if (arrimglist != null && arrimglist.size() != 0) {
+
+                holder.cardParent.setVisibility(View.VISIBLE);
+                holder.recyclerView.setVisibility(View.VISIBLE);
+
+                if (arrimglist.size() == 1) {
+                    holder.lldots.setVisibility(View.GONE);
+                } else if (arrimglist.size() > 1) {
+
+                    preparedots(holder);
+                    holder.lldots.setVisibility(View.VISIBLE);
+                }
+                SnapHelper mSnapHelper = new LinearSnapHelper();
+                holder.recyclerView.setOnFlingListener(null);
+                mSnapHelper.attachToRecyclerView(holder.recyclerView);
+                holder.recyclerView.setLayoutManager(new LinearLayoutManager(context, RecyclerView.HORIZONTAL, false));
+                holder.recyclerView.setAdapter(new SlideRecyclerAdapter(context, arrimglist));
+
+
+            } else if ((arrimglist == null) || (arrimglist.size() == 0)) {
+
+                holder.cardParent.setVisibility(View.GONE);
+                holder.recyclerView.setVisibility(View.GONE);
+                holder.lldots.setVisibility(View.GONE);
+
+            }
+
+
+            holder.recyclerView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+
+                    final AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                    builder.setMessage("Do you want to delete this post from Notice feed")
+                            .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    arrnoticelist.remove(position);
+                                    notifyDataSetChanged();
+                                }
+                            })
+                            .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                }
+                            });
+                    builder.show();
+                    return true;
+                }
+            });
+        }
+    }
+
+
+    void preparedots(final NoticeAdapter.ViewHolder holder) {
+
+        holder.lldots.removeAllViews();
+
+//        dotscount = sliderAdapter.getCount();
+
+        dotscount = arrimglist.size();
+
+        dots = new ImageView[dotscount];
+
+        for (int i = 0; i<dotscount;i++){
+
+            dots[i] = new ImageView(context);
+
+            dots[i].setImageDrawable(ContextCompat.getDrawable(context, R.drawable.unselectdots));
+
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+
+            params.setMargins(4, 0, 4, 0);
+
+            holder.lldots.addView(dots[i], params);
+        }
+
+        dots[0].setImageDrawable(ContextCompat.getDrawable(context, R.drawable.selecteddots));
+
+
+        holder.recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
-            public boolean onLongClick(View v) {
-                final AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                builder.setMessage("Do you want to delete this post from news feed")
-                        .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                arrnoticelist.remove(position);
-                                dialog.dismiss();
-                                notifyDataSetChanged();
-                            }
-                        })
-                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+            }
 
-                                dialog.dismiss();
-                            }
-                        });
-                builder.show();
-                return true;
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                LinearLayoutManager linearLayoutManager = (LinearLayoutManager) holder.recyclerView.getLayoutManager();
+                if (linearLayoutManager != null) {
+                    int firstelementposition = linearLayoutManager.findFirstVisibleItemPosition();
+                    setDots(firstelementposition);
+                }
             }
         });
+    }
 
-        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-
-                final AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                builder.setMessage("Do you want to delete this post from news feed")
-                        .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                arrnoticelist.remove(position);
-                                notifyDataSetChanged();
-                            }
-                        })
-                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-
-                            }
-                        });
-                builder.show();
-                return true;
-            }
-        });
-
+    public void setDots(int position){
+        for (int i = 0; i<dotscount; i++){
+            dots[i].setImageDrawable(ContextCompat.getDrawable(context,R.drawable.unselectdots));
+        }
+        dots[position].setImageDrawable(ContextCompat.getDrawable(context,R.drawable.selecteddots));
     }
 
     @Override
     public int getItemCount() {
+
         return arrnoticelist.size();
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return position;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        ImageView imageView;
-        TextView textView;
+        RecyclerView recyclerView;
+
+        RelativeLayout cardParent;
+
+        LinearLayout lldots;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            imageView = itemView.findViewById(R.id.customnotice_img);
+            cardParent = itemView.findViewById(R.id.customnotice_parentlayout);
+
+            recyclerView = itemView.findViewById(R.id.customnotice_recyclerview);
+
+            lldots = itemView.findViewById(R.id.customnotice_lldots);
 
         }
     }

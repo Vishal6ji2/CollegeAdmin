@@ -1,50 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:background="@android:color/transparent"
-        app:cardBackgroundColor="@android:color/transparent"
-        android:backgroundTint="@android:color/transparent"
-        app:cardUseCompatPadding="true"
-        app:cardElevation="@dimen/_3sdp"
-        tools:targetApi="lollipop">
+    <RelativeLayout
+        android:id="@+id/customnotice_parentlayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-        <ImageView
+<!--
+        <androidx.cardview.widget.CardView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/noticepinicon"
-            android:padding="@dimen/_2sdp"/>
+            android:layout_centerHorizontal="true"
+            android:background="@android:color/transparent"
+            app:cardBackgroundColor="@android:color/transparent"
+            android:backgroundTint="@android:color/transparent"
+            app:cardUseCompatPadding="true"
+            app:cardElevation="@dimen/_3sdp"
+            tools:targetApi="lollipop">
 
-    </androidx.cardview.widget.CardView>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/noticepinicon"
+                android:padding="@dimen/_2sdp"
+                android:background="@android:color/transparent"/>
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/_5sdp"
-        app:cardUseCompatPadding="true"
-        app:cardElevation="@dimen/_2sdp">
+        </androidx.cardview.widget.CardView>-->
 
-        <com.zolad.zoominimageview.ZoomInImageView
-            android:id="@+id/customnotice_img"
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:minHeight="@dimen/_150sdp"
-            android:maxHeight="@dimen/_250sdp"
-            android:src="@drawable/pictwo"
-            android:adjustViewBounds="true"
-            android:scaleType="fitCenter"
-            android:visibility="visible"
-            android:background="@color/colorlightgray"/>
+            android:layout_margin="@dimen/_5sdp"
+            app:cardUseCompatPadding="true"
+            app:cardElevation="@dimen/_2sdp">
 
-    </androidx.cardview.widget.CardView>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/customnotice_recyclerview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:transitionName="images"
+                    android:orientation="horizontal"
+                    tools:listitem="@layout/customsliderimglayout"
+                    tools:ignore="UnusedAttribute" />
+
+                <LinearLayout
+                    android:id="@+id/customnotice_lldots"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="center"
+                    android:layout_margin="@dimen/_5sdp"
+                    android:layout_alignBottom="@id/customnotice_recyclerview"/>
+
+            </RelativeLayout>
+
+        </androidx.cardview.widget.CardView>
+
+    </RelativeLayout>
 
 </RelativeLayout>

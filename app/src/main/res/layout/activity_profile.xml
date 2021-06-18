@@ -26,7 +26,8 @@
                     android:layout_width="@dimen/_22sdp"
                     android:layout_height="@dimen/_22sdp"
                     android:src="@drawable/arrowback"
-                    android:layout_centerVertical="true"/>
+                    android:layout_centerVertical="true"
+                    tools:ignore="ContentDescription" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -46,13 +47,14 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_10sdp">
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/profile_profileimg"
             android:layout_width="@dimen/_100sdp"
             android:layout_height="@dimen/_100sdp"
-            android:src="@drawable/directorimg"
+            android:src="@drawable/profilefive"
             android:layout_gravity="center"
             android:background="@color/colorlightgray"
             android:layout_centerInParent="true"
@@ -69,7 +71,8 @@
             android:layout_alignEnd="@id/profile_profileimg"
             app:backgroundTint="@color/colorPrimaryDark"
             android:src="@drawable/addicon"
-            app:tint="@android:color/white"/>
+            app:tint="@android:color/white"
+            tools:ignore="ContentDescription" />
 
     </RelativeLayout>
 
@@ -165,7 +168,7 @@
                     android:id="@+id/profile_emaileditimg"
                     android:layout_width="@dimen/_15sdp"
                     android:layout_height="@dimen/_15sdp"
-                    android:src="@android:drawable/ic_menu_edit"
+                    android:src="@drawable/editicon"
                     android:layout_centerVertical="true"
                     android:layout_alignParentEnd="true"/>
 
@@ -197,7 +200,7 @@
                     android:id="@+id/profile_mobeditimg"
                     android:layout_width="@dimen/_15sdp"
                     android:layout_height="@dimen/_15sdp"
-                    android:src="@android:drawable/ic_menu_edit"
+                    android:src="@drawable/editicon"
                     android:layout_centerVertical="true"
                     android:layout_alignParentEnd="true"/>
 

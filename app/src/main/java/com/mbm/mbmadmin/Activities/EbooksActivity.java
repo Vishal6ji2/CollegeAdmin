@@ -245,7 +245,7 @@ public class EbooksActivity extends AppCompatActivity implements ActivityCompat.
                     }else if (encodedpdf == null){
                         toast(EbooksActivity.this,"Please select Book pdf");
                     }else {
-                        uploadEbook();
+//                        uploadEbook();
                     }
                 }
             });
@@ -274,6 +274,7 @@ public class EbooksActivity extends AppCompatActivity implements ActivityCompat.
     }*/
 
 
+/*
 
     public void uploadEbook() {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
@@ -317,6 +318,8 @@ public class EbooksActivity extends AppCompatActivity implements ActivityCompat.
             }
         });
     }
+
+*/
 
     public void SetUtils(){
 

@@ -3,23 +3,21 @@ package com.mbm.mbmadmin.Activities;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
+
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.ImageDecoder;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.provider.OpenableColumns;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -34,27 +32,22 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.gson.Gson;
 import com.mbm.mbmadmin.Adapters.NewsPostAdapter;
 import com.mbm.mbmadmin.FileUtils;
 import com.mbm.mbmadmin.ModelResponse.NewsFeedResponse;
 import com.mbm.mbmadmin.R;
 import com.mbm.mbmadmin.RetrofitClient;
+import com.mbm.mbmadmin.Suitcases.NewsFetchResponse;
 import com.mbm.mbmadmin.Suitcases.NewsPostSuitcase;
 
-import org.jetbrains.annotations.NotNull;
-
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Objects;
 
 import okhttp3.MediaType;
@@ -62,11 +55,11 @@ import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
-import okhttp3.Response;
 import retrofit2.Call;
 import retrofit2.Callback;
-import retrofit2.http.Multipart;
+import retrofit2.Response;
 
+import static com.mbm.mbmadmin.Networks.CheckInternet.isConnected;
 import static com.mbm.mbmadmin.ViewUtils.toast;
 
 public class NewsfeedActivity extends AppCompatActivity {
@@ -77,38 +70,56 @@ public class NewsfeedActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
 
-    ArrayList<NewsPostSuitcase> arrpostlist = new ArrayList<>();
+    ShimmerFrameLayout shimmerFrameLayout;
+
+    ArrayList<NewsFetchResponse.Newsfeed> arrNewslist = new ArrayList<>();
+
+    ArrayList<NewsFetchResponse.Newsfeed> arrayPrevList = new ArrayList<>();
 
     BottomSheetDialog bottomSheetDialog;
 
-    OkHttpClient okHttpClient;
+    SharedPreferences sharedPreferences;
 
-    Request request;
+    SharedPreferences.Editor editor;
 
     Uri uri;
-    //addnews views
+
+    TextView txtUpdate;
+
+    CardView cardUpdate;
+
+    int currcount = 0;
+    int prevcount,flag = 0;
+
+    //addnews bottomsheetviews
 
     MaterialToolbar addtoolbar;
+
     ImageView cancelimg,newsimg,okimg;
+
     MaterialButton btnpost;
 
     FloatingActionButton fabcam;
 
     TextView txttitle,txtimg;
+
     ProgressBar progressBar;
 
     EditText edttitle, edtnews;
-    String imagename,encodedimage;
-    Bitmap bitmap;
+
+    String imagename;
+
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@NonNull Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_newsfeed);
 
         initviews();
 
         setSupportActionBar(toolbar);
+
+        cardUpdate.setVisibility(View.GONE);
 
         backimg.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -117,43 +128,118 @@ public class NewsfeedActivity extends AppCompatActivity {
             }
         });
 
+        arrNewslist.clear();
 
-        addPostData("Mukesh Singhavi","2h ago","26/10/2020","About Exam Scheduling","Our https://simpletexting.com/how-to-create-a-link-that-sends-an-sms-text-message/ exam is scheduled on 23 nov. 2020 where we'll start your exam at the center which mbm south campus in mbm of jodhpur ,rajasthan.",R.drawable.mbmlogo,0);
+        if (isConnected(this)){
+//            addPostData();
+        }else {
+            
+            showNetworkDialog();
+        }
 
-        addPostData("N.C. Barwar","5h ago","25/10/2020","About Timetable",null,R.drawable.profilefive,R.drawable.directorimg);
+        cardUpdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
-        addPostData("Simran choudhary","2d ago","10/10/2020","About Practical exam","Our exam is scheduled https://simpletexting.com/how-to-create-a-link-that-sends-an-sms-text-message/ on 23 nov. 2020 where we'll start your exam at the center which mbm south campus in mbm of jodhpur ,rajasthan.",R.drawable.profilefour,R.drawable.designerimg);
-
-        addPostData("Aditya sawant","5d ago","12/10/2020","About Seminar","Our exam is scheduled on 23 nov. 2020 where we'll start your exam at the center which mbm south campus in mbm of jodhpur ,rajasthan.",R.drawable.mbmlogo,R.drawable.pictwo);
-
-        addPostData("Anil gupta","7d ago","10/12/2020","About Mid-Term","Our exam is scheduled on 23 nov. 2020 where we'll start your exam at the center which mbm south campus in mbm of jodhpur ,rajasthan.",R.drawable.profilefour,R.drawable.editorimg);
-
-
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(new NewsPostAdapter(this,arrpostlist));
+                recreate();
+                cardUpdate.setVisibility(View.GONE);
+                flag = 0;
+            }
+        });
 
     }
 
-
-    public void addPostData(String profilename,String timeago,String datetime,String txtheading,String txtdetails, int profileimg, int postimg){
-
-        NewsPostSuitcase newsPostSuitcase = new NewsPostSuitcase();
-
-        newsPostSuitcase.profileimg = profileimg;
-        newsPostSuitcase.postimg = postimg;
-
-        newsPostSuitcase.profilename = profilename;
-        newsPostSuitcase.datetime = datetime;
-        newsPostSuitcase.timeago = timeago;
-        newsPostSuitcase.txtheading = txtheading;
-        newsPostSuitcase.txtdetails = txtdetails;
-
-        arrpostlist.add(newsPostSuitcase);
+    private void showNetworkDialog() {
     }
+/*
+
+    public void addPostData(){
+
+        recyclerView.setVisibility(View.GONE);
+        shimmerFrameLayout.setVisibility(View.VISIBLE);
+        shimmerFrameLayout.startShimmerAnimation();
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(NewsfeedActivity.this);
+        linearLayoutManager.setStackFromEnd(false);
+        linearLayoutManager.setReverseLayout(true);
+        recyclerView.setLayoutManager(linearLayoutManager);
+
+        Call<NewsFetchResponse> responseCall = RetrofitClient.getInstance().getapi().fetchNewsData();
+
+        responseCall.enqueue(new Callback<NewsFetchResponse>() {
+            @Override
+            public void onResponse(Call<NewsFetchResponse> call, Response<NewsFetchResponse> response) {
+
+                if (response.isSuccessful()) {
+                    if (response.body() != null) {
+
+                        arrayPrevList.clear();
+
+                        arrNewslist = response.body().getNewsfeeds();
+
+                        shimmerFrameLayout.stopShimmerAnimation();
+                        shimmerFrameLayout.setVisibility(View.GONE);
+                        recyclerView.setVisibility(View.VISIBLE);
+
+                        currcount = arrNewslist.size();
+
+                        sharedPreferences = getSharedPreferences("newsfeed",MODE_PRIVATE);
+
+                        prevcount = sharedPreferences.getInt("newscount",0);
+
+//                        if (prevcount==0){
+                            recyclerView.setAdapter(new NewsPostAdapter(NewsfeedActivity.this,arrNewslist));
+//                        }else if(prevcount>currcount || prevcount<currcount){
+//                            for (int i=0; i<prevcount;i++){
+//                                arrayPrevList.add(arrNewslist.get(i));
+//                            }
+//                            recyclerView.setAdapter(new NewsPostAdapter(NewsfeedActivity.this, arrayPrevList));
+//                        }
+
+
+
+                        checkNewPosts(currcount);
+
+                    } else {
+                        Log.d("newsfetchfail",response.message());
+                        toast(NewsfeedActivity.this,response.message());
+                    }
+                }else {
+                    toast(NewsfeedActivity.this,response.message());
+                    Log.d("newsfetchfail",response.message());
+                }
+            }
+
+            @SuppressLint("LogConditional")
+            @Override
+            public void onFailure(Call<NewsFetchResponse> call, Throwable t) {
+
+                toast(NewsfeedActivity.this, Objects.requireNonNull(t.getLocalizedMessage()));
+                Log.d("newsfetchfail",t.getMessage());
+
+            }
+        });
+
+    }
+
+*/
+    void checkNewPosts(int currcount) {
+
+        if (currcount>prevcount){
+            cardUpdate.setVisibility(View.VISIBLE);
+            flag = 1;
+        }else {
+            flag = 0;
+        }
+
+        editor = sharedPreferences.edit();
+        editor.putInt("newscount",currcount);
+        editor.apply();
+    }
+
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(@NonNull Menu menu) {
 
         getMenuInflater().inflate(R.menu.menuaddwhite,menu);
 
@@ -209,7 +295,7 @@ public class NewsfeedActivity extends AppCompatActivity {
                     if (edtnews.getText().toString().isEmpty()){
                         Toast.makeText(NewsfeedActivity.this,"Enter Post Details",Toast.LENGTH_SHORT).show();
                     } else {
-                        uploadpost();
+//                        uploadpost();
                     }
                 }
             });
@@ -241,95 +327,48 @@ public class NewsfeedActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         progressBar.setVisibility(View.VISIBLE);
 
-        okHttpClient = new OkHttpClient();
 
-        MultipartBody.Builder builder = new MultipartBody.Builder();
-        if (uri != null) {
-            File file = new File(FileUtils.getFilePathFromURI(this, uri));
+        File file = new File(FileUtils.getFilePathFromURI(this, uri));
 
 
-            Log.d("okhttpclient", "called actual request");
+
+        Log.d("okhttpclient",uri.toString());
+
+        MultipartBody.Part imagepart = MultipartBody.Part.createFormData("news_imagepath",file.getName(),RequestBody.create(MediaType.parse("*/*"),file));
+
+        Log.d("okhttpclient", file.getName());
 
 
-            builder.setType(MultipartBody.FORM);
-
-            builder.addFormDataPart("news_imagepath",file.getName(), RequestBody.create(MediaType.parse("image/jpg"),file));
-        }else{
-            builder.addFormDataPart("news_imagepath",null);
-        }
-        builder.addFormDataPart("news_title", edttitle.getText().toString());
-        builder.addFormDataPart("news_paragraph", edtnews.getText().toString());
-        builder.addFormDataPart("admin_name", "Vishal Kumavat");
-        builder.addFormDataPart("dept_id", "2");
-        builder.build();
-
-        Log.d("okhttpclient", "request body generated");
-
-        request = new Request.Builder()
-                .url("https://mbmvishal.000webhostapp.com/new_feed.php")
-                .post(builder.build())
-                .build();
-
-        Log.d("okhttpclient", "called request");
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Response response = okHttpClient.newCall(request).execute();
-                    assert response.body() != null;
-                    Log.d("okhttpclient", response.body().string());
-//                            progressBar.setVisibility(View.GONE);
-                } catch (IOException e) {
-                    Log.d("okhttpclient", "Exception occured" + e.toString());
-//                            progressBar.setVisibility(View.GONE);
-                    e.printStackTrace();
-                }
-            }
-        }).start();
-
-        progressBar.setVisibility(View.GONE);
-
-       /* RequestBody requestBody = RequestBody.create(MediaType.parse("image/*"), file);
-        MultipartBody.Part fileToUpload = MultipartBody.Part.createFormData("news_imagepath", file.getName(), requestBody);
-
-        RequestBody newstitle = RequestBody.create(MediaType.parse("text/plain"), edttitle.getText().toString());
-        RequestBody newsfeed = RequestBody.create(MediaType.parse("text/plain"), edtnews.getText().toString());
-        RequestBody adminname = RequestBody.create(MediaType.parse("text/plain"), "vishal");
-        RequestBody deptid = RequestBody.create(MediaType.parse("text/plain"), "1");
+       /* Call<NewsFeedResponse> newsFeedResponseCall = RetrofitClient.getInstance()
+                .getapi()
+                .newsupload(imagepart,edttitle.getText().toString(),edtnews.getText().toString(),"vishal kumavat","cse");
 */
-
-
-//        Call<NewsFeedResponse> newsFeedResponseCall = RetrofitClient.getInstance()
-//                .getapi()
-//                .newsupload(fileToUpload,newstitle,newsfeed,adminname,deptid);
-
-        /*newsFeedResponseCall.enqueue(new Callback<NewsFeedResponse>() {
+      /*  newsFeedResponseCall.enqueue(new Callback<NewsFeedResponse>() {
             @Override
-            public void onResponse(@NotNull Call<NewsFeedResponse> call, @NotNull Response<NewsFeedResponse> response) {
+            public void onResponse(Call<NewsFeedResponse> call, Response<NewsFeedResponse> response) {
+
                 progressBar.setVisibility(View.GONE);
-                getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+                bottomSheetDialog.dismiss();
+
                 NewsFeedResponse newsFeedResponse = response.body();
+
                 if (newsFeedResponse != null) {
-                    if (!newsFeedResponse.getError()) {
+                    if (response.isSuccessful()) {
                         toast(NewsfeedActivity.this, newsFeedResponse.getMessage());
                     } else {
                         toast(NewsfeedActivity.this, newsFeedResponse.getMessage());
                     }
                 }
+                Log.d("OnResponse",response.message());
             }
 
-            @SuppressLint("LogConditional")
             @Override
-            public void onFailure(@NotNull Call<NewsFeedResponse> call, @NotNull Throwable t) {
+            public void onFailure(Call<NewsFeedResponse> call, Throwable t) {
                 progressBar.setVisibility(View.GONE);
-                Log.d("ApiResponse>>","ApiCall>> "+call.request());
-//                Log.d("ApiResponse>>","ApiCall>> "+new Gson().toJson(call.request()));
-                Log.d("ApiResponse>>","ApiResponse>> "+new Gson().toJson(call.request()));
-                getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
-//                Log.d("newsdatafail",t.getMessage()+"\n"+new Gson().toJson(call.request().body())+"\n"+call.request().body());
-                Toast.makeText(NewsfeedActivity.this, "News post upload failed", Toast.LENGTH_SHORT).show();
                 bottomSheetDialog.dismiss();
+                Log.d("OnFailure",String.valueOf(t.getMessage()));
+                toast(NewsfeedActivity.this,String.valueOf(t.getLocalizedMessage()));
+
             }
         });
 */
@@ -352,6 +391,7 @@ public class NewsfeedActivity extends AppCompatActivity {
 
         txtimg = bottomsheetview.findViewById(R.id.addnews_txtimg);
         txttitle = bottomsheetview.findViewById(R.id.addnews_txttitle);
+
         progressBar = bottomsheetview.findViewById(R.id.addnews_progressbar);
 
     }
@@ -400,7 +440,8 @@ public class NewsfeedActivity extends AppCompatActivity {
 
     }
 
-    public String getimagename(Uri uri, Intent data){
+    @NonNull
+    public String getimagename(@NonNull Uri uri, Intent data){
         String filename = null;
         if (data != null) {
             uri = data.getData();
@@ -411,17 +452,13 @@ public class NewsfeedActivity extends AppCompatActivity {
 
 
             if (uristring.startsWith("content://")) {
-                Cursor cursor = null;
 
-                try {
-                    cursor = this.getContentResolver().query(uri, null, null, null, null);
+                try (Cursor cursor = this.getContentResolver().query(uri, null, null, null, null)) {
                     if (cursor != null && cursor.moveToFirst()) {
                         filename = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
-                        Log.d("filename",filename);
+                        Log.d("filename", filename);
                     }
 
-                } finally {
-                    cursor.close();
                 }
             } else if (uristring.startsWith("file://")) {
                 filename = file.getName();
@@ -433,9 +470,15 @@ public class NewsfeedActivity extends AppCompatActivity {
 
     private void initviews() {
 
+        txtUpdate = findViewById(R.id.newsfeed_txtupdate);
+
+        cardUpdate = findViewById(R.id.newsfeed_updatecard);
+
         toolbar = findViewById(R.id.newsfeed_toolbar);
 
         backimg = findViewById(R.id.newsfeed_backimg);
+
+        shimmerFrameLayout = findViewById(R.id.newsfeed_shimmerlayout);
 
         recyclerView = findViewById(R.id.newsfeed_recyclerview);
     }

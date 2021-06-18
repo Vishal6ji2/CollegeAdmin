@@ -30,15 +30,18 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
+import com.mbm.mbmadmin.Adapters.NewsPostAdapter;
 import com.mbm.mbmadmin.Adapters.PlacementAdapter;
 import com.mbm.mbmadmin.ModelResponse.PlacementnewsResponse;
 import com.mbm.mbmadmin.R;
 import com.mbm.mbmadmin.RetrofitClient;
+import com.mbm.mbmadmin.Suitcases.PlacementNewsFetchResponse;
 import com.mbm.mbmadmin.Suitcases.PlacementSuitcase;
 
 import org.jetbrains.annotations.NotNull;
@@ -47,10 +50,13 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static com.mbm.mbmadmin.ViewUtils.toast;
 
 public class PlacementActivity extends AppCompatActivity {
 
@@ -59,7 +65,9 @@ public class PlacementActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
 
-    ArrayList<PlacementSuitcase> arrplacementlist = new ArrayList<>();
+    ShimmerFrameLayout shimmerFrameLayout;
+
+    ArrayList<PlacementNewsFetchResponse.Placementnews> arrPlacementNewslist = new ArrayList<>();
 
     ImageView backimg;
 
@@ -101,39 +109,58 @@ public class PlacementActivity extends AppCompatActivity {
             }
         });
 
-        addData(R.drawable.directorimg,"TCS","Off campus recruitment","12:11,12nov.2020","All the students of batch who are placed via off campus recruitment are requested to fill the given google form.");
-        addData(R.drawable.directorimg,"TCS","Off campus recruitment","12:11,12nov.2020","All the students of batch who are placed via off campus recruitment are requested to fill the given google form.");
-        addData(R.drawable.editorimg,"TCS","Off campus recruitment","12:11,12nov.2020","All the students of batch who are placed via off campus recruitment are requested to fill the given google form.");
-        addData(R.drawable.designerimg,"TCS","Off campus recruitment","12:11,12nov.2020","All the students of batch who are placed via off campus recruitment are requested to fill the given google form.");
-        addData(R.drawable.pictwo,"TCS","Off campus recruitment","12:11,12nov.2020","All the students of batch who are placed via off campus recruitment are requested to fill the given google form.");
-        addData(R.drawable.directorimg,"TCS","Off campus recruitment","12:11,12nov.2020","All the students of batch who are placed via off campus recruitment are requested to fill the given google form.");
-        addData(R.drawable.picone,"TCS","Off campus recruitment","12:11,12nov.2020","All the students of batch who are placed via off campus recruitment are requested to fill the given google form.");
-        addData(R.drawable.editorimg,"TCS","Off campus recruitment","12:11,12nov.2020","All the students of batch who are placed via off campus recruitment are requested to fill the given google form.");
-        addData(R.drawable.designerimg,"TCS","Off campus recruitment","12:11,12nov.2020","All the students of batch who are placed via off campus recruitment are requested to fill the given google form.");
-        addData(R.drawable.directorimg,"TCS","Off campus recruitment","12:11,12nov.2020","All the students of batch who are placed via off campus recruitment are requested to fill the given google form.");
+//        addPlacementNewsData();
 
+    }
+/*
 
+    public void addPlacementNewsData(){
+
+        shimmerFrameLayout.setVisibility(View.VISIBLE);
+        shimmerFrameLayout.startShimmerAnimation();
+
+        recyclerView.setVisibility(View.GONE);
+        recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.addItemDecoration(new DividerItemDecoration(PlacementActivity.this,DividerItemDecoration.VERTICAL));
-        recyclerView.setAdapter(new PlacementAdapter(this,arrplacementlist));
 
+//        Call<PlacementNewsFetchResponse> responseCall = RetrofitClient.getInstance().getapi().fetchPlacementNewsData();
+
+        responseCall.enqueue(new Callback<PlacementNewsFetchResponse>() {
+            @Override
+            public void onResponse(Call<PlacementNewsFetchResponse> call, Response<PlacementNewsFetchResponse> response) {
+                if (response.isSuccessful()) {
+                    if (response.body() != null) {
+
+                        arrPlacementNewslist = response.body().getPlacementnews();
+
+                        shimmerFrameLayout.stopShimmerAnimation();
+                        shimmerFrameLayout.setVisibility(View.GONE);
+                        recyclerView.setVisibility(View.VISIBLE);
+
+                        recyclerView.setAdapter(new PlacementAdapter(PlacementActivity.this, arrPlacementNewslist));
+
+                    } else {
+                        toast(PlacementActivity.this,response.message());
+                    }
+                }else {
+                    toast(PlacementActivity.this,response.message());
+                }
+            }
+
+            @SuppressLint("LogConditional")
+            @Override
+            public void onFailure(Call<PlacementNewsFetchResponse> call, Throwable t) {
+                toast(PlacementActivity.this, Objects.requireNonNull(t.getLocalizedMessage()));
+                Log.d("placementnewsfetchfail",t.getMessage());
+
+            }
+        });
     }
 
-    private void addData(int cmpimg,String cmpname,String cmptitle,String cmptime,String cmpnews) {
-
-        PlacementSuitcase placementSuitcase = new PlacementSuitcase();
-        placementSuitcase.companyname = cmpname;
-        placementSuitcase.cmptime = cmptime;
-        placementSuitcase.companyimg = cmpimg;
-        placementSuitcase.placementtitle = cmptitle;
-        placementSuitcase.placementnews = cmpnews;
-
-
-        arrplacementlist.add(placementSuitcase);
-    }
-
+*/
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(@NonNull Menu menu) {
 
         getMenuInflater().inflate(R.menu.menuaddwhite,menu);
 
@@ -212,7 +239,7 @@ public class PlacementActivity extends AppCompatActivity {
                         Toast.makeText(PlacementActivity.this, "Fill all Placement details", Toast.LENGTH_SHORT).show();
 
                     }else {
-                        uploadplacementnews();
+//                        uploadplacementnews();
                     }
                 }
             });
@@ -222,6 +249,7 @@ public class PlacementActivity extends AppCompatActivity {
         }
         return false;
     }
+/*
 
      public void uploadplacementnews() {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
@@ -265,6 +293,7 @@ public class PlacementActivity extends AppCompatActivity {
 
     }
 
+*/
     public void SetUtils(){
 
         edtnews.setText("");
@@ -301,6 +330,8 @@ public class PlacementActivity extends AppCompatActivity {
     }
 
     private void initviews() {
+
+        shimmerFrameLayout = findViewById(R.id.placement_shimmerlayout);
 
         toolbar = findViewById(R.id.placement_toolbar);
 

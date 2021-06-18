@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:id="@+id/addadmin_bottomsheetlayout"
+    android:background="@drawable/bottomsheetrounded">
+
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardElevation="@dimen/_3sdp">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/addadmin_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/addadmin_backimg"
+                    android:layout_width="@dimen/_22sdp"
+                    android:layout_height="@dimen/_22sdp"
+                    android:src="@drawable/closeicon"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentStart="true"
+                    android:background="?attr/selectableItemBackground"
+                    tools:ignore="ContentDescription" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Add Admin"
+                    android:textSize="@dimen/_15ssp"
+                    android:layout_gravity="center"
+                    android:layout_centerVertical="true"
+                    android:textColor="@color/colorverydarkgrey"
+                    android:gravity="center"
+                    tools:ignore="HardcodedText" />
+
+            </RelativeLayout>
+
+        </com.google.android.material.appbar.MaterialToolbar>
+
+    </androidx.cardview.widget.CardView>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <ProgressBar
+            android:id="@+id/addadmin_progressbar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="invisible" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_5sdp"
+            android:orientation="vertical">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/addadmin_edtname"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Admin Name"
+                    android:inputType="textPersonName"
+                    android:maxLines="1"
+                    android:background="@android:color/transparent"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Mobile No.">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/addadmin_edtmob"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:maxLines="1"
+                    android:maxLength="10"
+                    android:background="@android:color/transparent"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Email id">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/addadmin_edtemail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textEmailAddress"
+                    android:maxLines="1"
+                    android:background="@android:color/transparent"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.button.MaterialButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_18sdp"
+                android:id="@+id/addadmin_btnsubmit"
+                android:text="Submit"
+                android:padding="@dimen/_8sdp"
+                app:backgroundTint="@color/colorPrimaryDark"
+                android:visibility="visible"
+                tools:ignore="HardcodedText" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+
+</LinearLayout>

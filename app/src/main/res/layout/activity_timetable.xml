@@ -39,6 +39,38 @@
 
     </androidx.cardview.widget.CardView>
 
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/tt_shimmerlayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tt_card">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <include layout="@layout/timetableshimmerlayout"/>
+                <include layout="@layout/timetableshimmerlayout"/>
+                <include layout="@layout/timetableshimmerlayout"/>
+                <include layout="@layout/timetableshimmerlayout"/>
+                <include layout="@layout/timetableshimmerlayout"/>
+                <include layout="@layout/timetableshimmerlayout"/>
+                <include layout="@layout/timetableshimmerlayout"/>
+                <include layout="@layout/timetableshimmerlayout"/>
+                <include layout="@layout/timetableshimmerlayout"/>
+                <include layout="@layout/timetableshimmerlayout"/>
+
+            </LinearLayout>
+
+        </ScrollView>
+
+    </com.facebook.shimmer.ShimmerFrameLayout>
+
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

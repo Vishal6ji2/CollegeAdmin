@@ -23,13 +23,16 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.gson.Gson;
+import com.mbm.mbmadmin.Adapters.PlacementAdapter;
 import com.mbm.mbmadmin.Adapters.TimetableAdapter;
 import com.mbm.mbmadmin.ModelResponse.EbookResponse;
 import com.mbm.mbmadmin.ModelResponse.TimetableResponse;
 import com.mbm.mbmadmin.R;
 import com.mbm.mbmadmin.RetrofitClient;
+import com.mbm.mbmadmin.Suitcases.TimetableFetchResponse;
 import com.mbm.mbmadmin.Suitcases.TimetableSuitcase;
 
 import org.jetbrains.annotations.NotNull;
@@ -39,10 +42,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Time;
 import java.util.ArrayList;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static com.mbm.mbmadmin.ViewUtils.toast;
 
 public class TimetableActivity extends AppCompatActivity {
 
@@ -54,7 +60,9 @@ public class TimetableActivity extends AppCompatActivity {
 
     ImageView backimg;
 
-    ArrayList<TimetableSuitcase> arrtimelist = new ArrayList<>();
+    ShimmerFrameLayout shimmerFrameLayout;
+
+    ArrayList<TimetableFetchResponse.Timetable> arrtimelist = new ArrayList<>();
 
     String encodedimage;
 
@@ -75,28 +83,56 @@ public class TimetableActivity extends AppCompatActivity {
             }
         });
 
-        addData("",R.drawable.picone);
-        addData("",R.drawable.picone);
-        addData("",R.drawable.picone);
-        addData("",R.drawable.picone);
-        addData("",R.drawable.picone);
-        addData("",R.drawable.picone);
-        addData("",R.drawable.picone);
-        addData("",R.drawable.picone);
+//        addTimetableData();
 
+    }
+/*
+
+    private void addTimetableData() {
+
+        shimmerFrameLayout.setVisibility(View.VISIBLE);
+        shimmerFrameLayout.startShimmerAnimation();
+
+        recyclerView.setVisibility(View.GONE);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(new TimetableAdapter(this,arrtimelist));
+
+        Call<TimetableFetchResponse> responseCall = RetrofitClient.getInstance().getapi().fetchTimetableData();
+
+        responseCall.enqueue(new Callback<TimetableFetchResponse>() {
+            @Override
+            public void onResponse(Call<TimetableFetchResponse> call, Response<TimetableFetchResponse> response) {
+                if (response.isSuccessful()) {
+                    if (response.body() != null) {
+
+                        arrtimelist = response.body().getTimetables();
+
+                        shimmerFrameLayout.stopShimmerAnimation();
+                        shimmerFrameLayout.setVisibility(View.GONE);
+                        recyclerView.setVisibility(View.VISIBLE);
+
+                        recyclerView.setAdapter(new TimetableAdapter(TimetableActivity.this, arrtimelist));
+
+                    } else {
+                        toast(TimetableActivity.this,response.message());
+                    }
+                }else {
+                    toast(TimetableActivity.this,response.message());
+                }
+            }
+
+            @SuppressLint("LogConditional")
+            @Override
+            public void onFailure(Call<TimetableFetchResponse> call, Throwable t) {
+                toast(TimetableActivity.this, Objects.requireNonNull(t.getLocalizedMessage()));
+                Log.d("timetablefetchfail",t.getMessage());
+
+            }
+        });
+
+
     }
-
-    private void addData(String strsem,int semimg) {
-
-        TimetableSuitcase timetableSuitcase = new TimetableSuitcase();
-        timetableSuitcase.semimg =semimg;
-        timetableSuitcase.txtsem =strsem;
-
-        arrtimelist.add(timetableSuitcase);
-    }
+*/
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -145,13 +181,13 @@ public class TimetableActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
 
-            uploadTimetable(encodedimage,data);
+//            uploadTimetable(encodedimage,data);
 
         }
 
         super.onActivityResult(requestCode, resultCode, data);
     }
-
+/*
     private void uploadTimetable(String encodedimage,Intent data) {
 
         Call<TimetableResponse> timetableResponseCall = RetrofitClient.getInstance()
@@ -168,15 +204,15 @@ public class TimetableActivity extends AppCompatActivity {
                     Toast.makeText(TimetableActivity.this, timetableResponse.getMessage(), Toast.LENGTH_SHORT).show();
                     Log.d("ttdata",timetableResponse.getMessage());
 
-                   /* if (timetableResponse.getMessage().equals("Timetable image Uploaded Successfully")){
+                   *//* if (timetableResponse.getMessage().equals("Timetable image Uploaded Successfully")){
 
                     }else {
                         Log.d("ttdata","\n"+timetableResponse.getError());
-                    }*/
-                }/*else{
+                    }*//*
+                }*//*else{
                     Toast.makeText(TimetableActivity.this,timetableResponse.getMessage(),Toast.LENGTH_SHORT).show();
 
-                }*/
+                }*//*
             }
 
             @SuppressLint("LogConditional")
@@ -191,7 +227,7 @@ public class TimetableActivity extends AppCompatActivity {
         });
     }
 
-    public String getimagename(Uri uri, Intent data){
+   */ public String getimagename(Uri uri, Intent data){
         String filename = null;
         if (data != null) {
             uri = data.getData();
@@ -223,6 +259,8 @@ public class TimetableActivity extends AppCompatActivity {
     }
 
     private void initviews() {
+
+        shimmerFrameLayout = findViewById(R.id.tt_shimmerlayout);
 
         recyclerView = findViewById(R.id.tt_recyclerview);
 

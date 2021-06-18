@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.mbm.mbmadmin.Activities.FullPlacementNewsActivity;
 import com.mbm.mbmadmin.R;
+import com.mbm.mbmadmin.Suitcases.PlacementNewsFetchResponse;
 import com.mbm.mbmadmin.Suitcases.PlacementSuitcase;
 
 import java.util.ArrayList;
@@ -27,11 +28,11 @@ import java.util.Random;
 public class PlacementAdapter extends RecyclerView.Adapter<PlacementAdapter.ViewHolder> {
 
     Context context;
-    ArrayList<PlacementSuitcase> arrplacementlist;
+    ArrayList<PlacementNewsFetchResponse.Placementnews> arrplacementlist;
 
     List<String> colors = new ArrayList<>();
 
-    public PlacementAdapter(Context context, ArrayList<PlacementSuitcase> arrplacementlist) {
+    public PlacementAdapter(@NonNull Context context, @NonNull ArrayList<PlacementNewsFetchResponse.Placementnews> arrplacementlist) {
         this.context = context;
         this.arrplacementlist = arrplacementlist;
     }
@@ -64,24 +65,22 @@ public class PlacementAdapter extends RecyclerView.Adapter<PlacementAdapter.View
 
         holder.cmpname.setBackgroundColor(Color.parseColor(colors.get(i1)));
 
-        holder.cmpname.setText(arrplacementlist.get(position).companyname);
-        holder.cmpnews.setText(arrplacementlist.get(position).placementnews);
-        holder.cmptime.setText(arrplacementlist.get(position).cmptime);
-        holder.cmptitle.setText(arrplacementlist.get(position).placementtitle);
-
-
+        holder.cmpname.setText(arrplacementlist.get(position).getCmpName());
+        holder.cmpnews.setText(arrplacementlist.get(position).getCmpNews());
+        holder.cmptime.setText(arrplacementlist.get(position).getCmpTime());
+        holder.cmptitle.setText(arrplacementlist.get(position).getCmpTitle());
 
         holder.itemView.startAnimation(AnimationUtils.loadAnimation(context,R.anim.tabsanim));
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, "clicked "+position, Toast.LENGTH_SHORT).show();
                 holder.cmptitle.setTextColor(context.getResources().getColor(R.color.colordarkgrey));
                 holder.cmpnews.setTextColor(context.getResources().getColor(R.color.colordarkgrey));
                 holder.cmptime.setTextColor(context.getResources().getColor(R.color.colordarkgrey));
-                holder.cmpname.setBackgroundColor(context.getResources().getColor(R.color.colordarkgrey));
-                context.startActivity(new Intent(context, FullPlacementNewsActivity.class));
+
+                sendCmpData(position);
+
             }
         });
 
@@ -111,9 +110,32 @@ public class PlacementAdapter extends RecyclerView.Adapter<PlacementAdapter.View
 
     }
 
+    protected void sendCmpData(int position) {
+        Intent intent = new Intent(context,FullPlacementNewsActivity.class);
+        intent.putExtra("cmpname",arrplacementlist.get(position).getCmpName());
+        intent.putExtra("cmptitle",arrplacementlist.get(position).getCmpTitle());
+        intent.putExtra("cmpnews",arrplacementlist.get(position).getCmpNews());
+        intent.putExtra("cmpfilename",arrplacementlist.get(position).getCmpFilename());
+        intent.putExtra("cmpfilepath",arrplacementlist.get(position).getCmpFilepath());
+        intent.putExtra("cmptime",arrplacementlist.get(position).getCmpTime());
+        intent.putExtra("cmpuploadedby",arrplacementlist.get(position).getCmpUploadeby());
+
+        context.startActivity(intent);
+    }
+
     @Override
     public int getItemCount() {
         return arrplacementlist.size();
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return position;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

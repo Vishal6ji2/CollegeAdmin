@@ -1,5 +1,6 @@
 package com.mbm.mbmadmin.Activities;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityOptionsCompat;
@@ -22,8 +23,10 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.google.android.material.textfield.TextInputEditText;
 import com.mbm.mbmadmin.R;
+import com.mbm.mbmadmin.Sessions.LoginSession;
 import com.mikhaellopez.circularimageview.CircularImageView;
 
+import java.util.HashMap;
 import java.util.Objects;
 
 public class ProfileActivity extends AppCompatActivity {
@@ -31,14 +34,20 @@ public class ProfileActivity extends AppCompatActivity {
     MaterialToolbar toolbar;
 
     ImageView backimg,emaileditimg,mobeditimg;
-    TextView txtname,txtemail,txtmob,txtbranch,txtedit;
+
+    TextView txtname,txtemail,txtmob,txtbranch;
 
     FloatingActionButton cameraimg;
 
     ShapeableImageView profileimg;
 
+    LoginSession loginSession;
+
+    String name, email, phone, branch, imageurl, branchid, status, adminid,superAdmin;
+
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@NonNull Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
@@ -61,6 +70,8 @@ public class ProfileActivity extends AppCompatActivity {
                 startActivityForResult(intent,100);
             }
         });
+
+        getAdminDetails();
 
         final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(ProfileActivity.this, R.style.BottomSheetDialogTheme);
 
@@ -149,4 +160,27 @@ public class ProfileActivity extends AppCompatActivity {
         mobeditimg = findViewById(R.id.profile_mobeditimg);
 
     }
+
+    public void getAdminDetails(){
+        loginSession = new LoginSession(this);
+
+        HashMap<String,String> adminDetails =  loginSession.getAdminDetailsFromSession();
+
+        name = adminDetails.get(LoginSession.KEY_NAME);
+        email = adminDetails.get(LoginSession.KEY_EMAIL);
+        phone = adminDetails.get(LoginSession.KEY_PHONE);
+        imageurl = adminDetails.get(LoginSession.KEY_IMAGE);
+        branch = adminDetails.get(LoginSession.KEY_DEPT);
+
+        txtname.setText(name);
+        txtemail.setText(email);
+        txtmob.setText(phone);
+        txtbranch.setText(branch);
+
+        Uri imageuri = Uri.parse(imageurl);
+        Glide.with(this).load(imageuri).into(profileimg);
+
+    }
+
+
 }

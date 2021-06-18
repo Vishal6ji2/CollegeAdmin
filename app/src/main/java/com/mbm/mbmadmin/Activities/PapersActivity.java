@@ -40,7 +40,6 @@ public class PapersActivity extends AppCompatActivity {
 
     ImageView backimg;
 
-
     ViewPager viewPager;
 
     TabLayout tabLayout;

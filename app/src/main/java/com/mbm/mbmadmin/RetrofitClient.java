@@ -18,9 +18,7 @@ public class RetrofitClient {
 
     private static Retrofit retrofit;
 
-    private static Gson gson = new GsonBuilder().setLenient().create();
-
-    private RetrofitClient(){
+    private RetrofitClient() {
 
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
 //                .callTimeout(10, TimeUnit.SECONDS);
@@ -30,11 +28,11 @@ public class RetrofitClient {
         GsonBuilder builder = new GsonBuilder().excludeFieldsWithModifiers(Modifier.FINAL, Modifier.TRANSIENT, Modifier.STATIC);
         Gson gson = builder.create();
 
-        String BASE_URL = "https://mbmvishal.000webhostapp.com/";
+        String BASE_URL = "https://mbm.scelon.com/api/";
         retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create(gson))
-//                .client(httpClient.build())
+                .client(httpClient.build())
                 .build();
 
         }

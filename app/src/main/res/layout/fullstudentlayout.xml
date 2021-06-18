@@ -2,6 +2,7 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -28,7 +29,8 @@
                 android:layout_width="@dimen/_22sdp"
                 android:layout_height="@dimen/_22sdp"
                 android:src="@drawable/closeicon"
-                android:layout_centerVertical="true"/>
+                android:layout_centerVertical="true"
+                tools:ignore="ContentDescription" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -40,18 +42,6 @@
                 android:textColor="@android:color/black"
                 android:layout_centerVertical="true"/>
 
-            <!--<TextView
-                android:id="@+id/profile_edit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Edit"
-                android:textColor="@android:color/white"
-                android:layout_alignParentEnd="true"
-                android:textSize="@dimen/_14ssp"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="5dp"
-                android:background="?attr/selectableItemBackground"/>-->
-
         </RelativeLayout>
 
     </com.google.android.material.appbar.MaterialToolbar>
@@ -60,15 +50,19 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_10sdp">
 
-        <com.mikhaellopez.circularimageview.CircularImageView
+        <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/studentprofile_profileimg"
             android:layout_width="@dimen/_100sdp"
             android:layout_height="@dimen/_100sdp"
-            android:layout_gravity="center"
-            android:layout_centerInParent="true"/>
-
+            android:src="@drawable/profilefive"
+            android:transitionName="profile"
+            android:background="@color/colorlightgray"
+            app:shapeAppearanceOverlay="@style/circleimage"
+            android:layout_centerInParent="true"
+            tools:ignore="UnusedAttribute" />
 
     </RelativeLayout>
 
@@ -95,6 +89,23 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Vishal Kumavat"
+                android:padding="@dimen/_8sdp"
+                android:textSize="@dimen/_14ssp"
+                android:textColor="@color/colorPrimaryDark"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Registration No."
+                android:textColor="@color/colorverydarkgrey"
+                android:textSize="@dimen/_13ssp"
+                android:padding="@dimen/_4sdp"/>
+
+            <TextView
+                android:id="@+id/studentprofile_txtregno"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="J19UCSE4021"
                 android:padding="@dimen/_8sdp"
                 android:textSize="@dimen/_14ssp"
                 android:textColor="@color/colorPrimaryDark"/>

@@ -69,7 +69,8 @@
             android:layout_height="match_parent"
             android:scaleType="fitCenter"
             android:adjustViewBounds="true"
-            android:background="@color/colorlightgray"/>
+            android:background="@color/colorlightgray"
+            tools:ignore="ContentDescription" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/addnews_fabcam"
@@ -80,7 +81,7 @@
             android:src="@drawable/cameraicon"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
-            tools:ignore="RelativeOverlap"/>
+            tools:ignore="ContentDescription,RelativeOverlap"/>
 
         <ProgressBar
             android:id="@+id/addnews_progressbar"

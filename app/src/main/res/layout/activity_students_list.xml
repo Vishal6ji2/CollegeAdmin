@@ -17,52 +17,35 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:id="@+id/students_toolbar"
-            android:background="@color/colorPrimary">
+            android:background="@color/colorPrimary"
+            app:menu="@menu/studentsmenu"
+            android:theme="@style/HomeMenu"
+            app:navigationIcon="@drawable/arrowback"
+            app:title="Students"
+            app:titleTextColor="@android:color/white">
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="center">
-
-                <ImageView
-                    android:id="@+id/students_backimg"
-                    android:layout_width="@dimen/_24sdp"
-                    android:layout_height="@dimen/_24sdp"
-                    android:src="@drawable/arrowback"
-                    android:background="?attr/selectableItemBackground"/>
+                android:gravity="center"
+                android:visibility="gone">
 
                 <TextView
+                    android:id="@+id/students_txttitle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Students status"
-                    android:textSize="@dimen/_16ssp"
-                    android:fontFamily="@font/cc_semibold"
-                    android:textColor="@android:color/white"
-                    android:gravity="center"
-                    android:layout_toStartOf="@id/students_checkimg"/>
+                    android:text="Students"
+                    android:textSize="@dimen/_15ssp"
+                    android:fontFamily="@font/cc_medium"
 
-                <ImageView
-                    android:id="@+id/students_uploadimg"
-                    android:layout_width="@dimen/_24sdp"
-                    android:layout_height="@dimen/_24sdp"
-                    android:src="@drawable/xlsicon"
-                    android:layout_marginEnd="@dimen/_5sdp"
-                    android:layout_toStartOf="@id/students_checkimg"
-                    android:background="?attr/selectableItemBackground"/>
-
-                <ImageView
-                    android:id="@+id/students_checkimg"
-                    android:layout_width="@dimen/_24sdp"
-                    android:layout_height="@dimen/_24sdp"
-                    android:src="@drawable/correctwhiteicon"
-                    android:layout_alignParentEnd="true"
-                    android:background="?attr/selectableItemBackground"/>
+                    android:textColor="@android:color/white"/>
 
             </RelativeLayout>
 
         </com.google.android.material.appbar.MaterialToolbar>
 
     </androidx.cardview.widget.CardView>
+
 
     <ProgressBar
         android:id="@+id/students_progressbar"
@@ -75,16 +58,61 @@
         android:id="@+id/students_edtsearch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Search students"
+        android:hint="Search Student"
         android:inputType="textPersonName"
+        android:drawableStart="@drawable/studentsearchicon"
         android:layout_margin="@dimen/_10sdp"
-        tools:ignore="UnusedAttribute"
-        android:layout_below="@id/students_card"/>
+        android:drawablePadding="@dimen/_5sdp"
+        android:layout_below="@id/students_card"
+        tools:ignore="Autofill,HardcodedText" />
+
+
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/students_shimmerlayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/students_edtsearch"
+        android:visibility="gone">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <include layout="@layout/studentsshimmerlayout"/>
+                <include layout="@layout/studentsshimmerlayout"/>
+                <include layout="@layout/studentsshimmerlayout"/>
+                <include layout="@layout/studentsshimmerlayout"/>
+                <include layout="@layout/studentsshimmerlayout"/>
+                <include layout="@layout/studentsshimmerlayout"/>
+                <include layout="@layout/studentsshimmerlayout"/>
+                <include layout="@layout/studentsshimmerlayout"/>
+                <include layout="@layout/studentsshimmerlayout"/>
+                <include layout="@layout/studentsshimmerlayout"/>
+
+            </LinearLayout>
+
+        </ScrollView>
+
+    </com.facebook.shimmer.ShimmerFrameLayout>
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/students_refresh"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/students_edtsearch">
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/students_recyclerview"
-        android:layout_below="@id/students_edtsearch"/>
+        tools:listitem="@layout/customstudentlayout"
+        android:visibility="visible"/>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 </RelativeLayout>

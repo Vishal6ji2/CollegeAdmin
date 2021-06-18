@@ -3,10 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.mbm.mbmadmin">
 
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
+    <uses-permission
+        android:name="android.permission.MANAGE_EXTERNAL_STORAGE"
+        tools:ignore="ScopedStorage" />
 
     <application
         android:allowBackup="true"
@@ -15,14 +18,19 @@
         android:largeHeap="true"
         android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_round"
-        android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:usesCleartextTraffic="true">
-        <activity android:name=".Activities.StudentsListActivity">
+        android:usesCleartextTraffic="true"
+        tools:ignore="AllowBackup,UnusedAttribute">
+        <activity android:name=".Activities.FullImageShowActivity"/>
+        <activity android:name=".Activities.LinksActivity" />
+        <activity
+            android:name=".Activities.StudentsListActivity"
+            android:windowSoftInputMode="stateHidden|adjustPan">
             <intent-filter>
-            <action android:name="android.intent.action.VIEW" />
-            <category android:name="android.intent.category.DEFAULT" />
-        </intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
         </activity>
         <activity android:name=".Activities.ProfileActivity" />
         <activity android:name=".Activities.FullPlacementNewsActivity" />
@@ -32,11 +40,10 @@
         <activity android:name=".Activities.PlacementActivity" />
         <activity android:name=".Activities.NoticeActivity" />
         <activity android:name=".Activities.NewsfeedActivity" />
-        <activity android:name=".Activities.HomeActivity" />
+        <activity android:name=".Activities.OtpVerifyActivity" />
         <activity android:name=".Activities.ForgotpwdActivity" />
-        <activity android:name=".Activities.ResetPasswordActivity" />
-        <activity android:name=".Activities.LoginActivity" />
-        <activity android:name=".Activities.RegisterActivity" />
+        <activity android:name=".Activities.EmailVerifyActivity" />
+        <activity android:name=".Activities.HomeActivity" />
         <activity android:name=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

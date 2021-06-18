@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 public class TabsViewpagerAdapter extends FragmentPagerAdapter {
 
-    Context context;
+
     ArrayList<String> fragnamelist = new ArrayList<>();
     ArrayList<Fragment> fragmentArrayList = new ArrayList<>();
 

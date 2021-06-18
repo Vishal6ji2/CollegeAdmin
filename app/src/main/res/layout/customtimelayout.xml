@@ -13,6 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="BE IV SEM"
+        android:visibility="gone"
         android:textColor="@color/colorverydarkgrey"
         android:textStyle="normal"
         android:textSize="@dimen/_14ssp"

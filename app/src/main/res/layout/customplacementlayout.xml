@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_margin="@dimen/_5sdp"
-    android:background="?attr/selectableItemBackground">
+    android:background="?attr/selectableItemBackground"
+    android:id="@+id/customplacement_parentlayout">
 
 
     <RelativeLayout
@@ -23,7 +24,6 @@
             android:fontFamily="@font/cc_semibold"
             android:text="ADOBE"
             android:maxLines="1"
-            android:longClickable="true"
             android:paddingStart="@dimen/_4sdp"
             android:paddingEnd="@dimen/_4sdp"
             android:textColor="@android:color/white"
@@ -59,11 +59,15 @@
             android:id="@+id/customplacement_txtadmin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="by: Vishal Kumavat"
+            android:text="Vishal Kumavat"
             android:layout_below="@id/customplacement_cmpnews"
             android:textColor="@android:color/black"
-            android:textSize="@dimen/_10ssp"
-            android:layout_alignParentStart="true"/>
+            android:textSize="@dimen/_12ssp"
+            android:drawablePadding="@dimen/_5sdp"
+            android:maxLines="1"
+            android:gravity="center"
+            android:layout_alignParentStart="true"
+            app:drawableStartCompat="@drawable/adminicon" />
 
         <TextView
             android:id="@+id/customplacement_cmptime"
@@ -72,7 +76,7 @@
             android:text="12:11AM"
             android:textColor="@android:color/black"
             android:gravity="end"
-            android:textSize="@dimen/_10ssp"
+            android:textSize="@dimen/_12ssp"
             android:maxLines="1"
             android:layout_alignParentEnd="true"
             android:layout_below="@id/customplacement_cmpnews"/>

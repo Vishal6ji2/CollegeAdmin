@@ -5,6 +5,7 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+
     </style>
 
     <style name="BottomSheetDialogTheme" parent="Theme.Design.BottomSheetDialog">
@@ -22,5 +23,11 @@
     <style name="circleimage">
         <item name="cornerSize">50%</item>
     </style>
+
+    <style name="HomeMenu">
+       <item name="colorControlNormal">#FFFFFF</item>
+    </style>
+
+
 
 </resources>
