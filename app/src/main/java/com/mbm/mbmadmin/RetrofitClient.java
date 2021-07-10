@@ -28,7 +28,7 @@ public class RetrofitClient {
         GsonBuilder builder = new GsonBuilder().excludeFieldsWithModifiers(Modifier.FINAL, Modifier.TRANSIENT, Modifier.STATIC);
         Gson gson = builder.create();
 
-        String BASE_URL = "https://mbm.scelon.com/api/";
+        String BASE_URL = "https://www.mbm.scelon.com/api/";
         retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create(gson))

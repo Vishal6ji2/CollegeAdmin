@@ -1,27 +1,26 @@
-package com.mbm.mbmadmin.ModelResponse;
-
+package com.mbm.mbmadmin.ModelResponse.AddResponses;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
-public class StudentAddResponse implements Serializable
-{
+public class AddStudentsExcelResponse implements Serializable {
 
-    @SerializedName("status")
+    @SerializedName("error")
     @Expose
-    private Integer status;
+    private Boolean error;
+
     @SerializedName("message")
     @Expose
     private String message;
 
-    public Integer getStatus() {
-        return status;
+    public Boolean getError() {
+        return error;
     }
 
-    public void setStatus(Integer status) {
-        this.status = status;
+    public void setError(Boolean error) {
+        this.error = error;
     }
 
     public String getMessage() {
@@ -30,6 +29,4 @@ public class StudentAddResponse implements Serializable
 
     public void setMessage(String message) {
         this.message = message;
-    }
-
-}
+    }}

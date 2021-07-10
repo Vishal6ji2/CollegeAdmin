@@ -16,14 +16,8 @@
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/fplacement_toolbar"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize">
-
-            <ImageView
-                android:id="@+id/fplacement_backimg"
-                android:layout_width="@dimen/_22sdp"
-                android:layout_height="@dimen/_22sdp"
-                android:src="@drawable/arrowbackblack"
-                tools:ignore="ContentDescription" />
+            android:layout_height="?attr/actionBarSize"
+            app:navigationIcon="@drawable/arrowbackblack">
 
             <TextView
                 android:id="@+id/fplacement_txtcmpname"

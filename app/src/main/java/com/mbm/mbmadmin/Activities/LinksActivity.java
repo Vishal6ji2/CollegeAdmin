@@ -6,7 +6,9 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,9 +22,19 @@ import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.button.MaterialButton;
 import com.mbm.mbmadmin.Adapters.LinksAdapter;
+import com.mbm.mbmadmin.ModelResponse.AddResponses.AddLinkResponse;
+import com.mbm.mbmadmin.ModelResponse.AddResponses.AddLinkResponse;
 import com.mbm.mbmadmin.R;
+import com.mbm.mbmadmin.RetrofitClient;
+import com.mbm.mbmadmin.Sessions.LoginSession;
 import com.mbm.mbmadmin.Suitcases.LinksSuitcase;
 import java.util.ArrayList;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+import static com.mbm.mbmadmin.Sessions.LoginSession.KEY_DEPT_ID;
 import static com.mbm.mbmadmin.ViewUtils.toast;
 
 
@@ -31,8 +43,8 @@ public class LinksActivity extends AppCompatActivity {
     RecyclerView recyclerView;
 
     MaterialToolbar toolbar;
-
-    ImageView backimg;
+    
+    LoginSession loginSession;
 
     ArrayList<LinksSuitcase> arrlinkslist = new ArrayList<>();
 
@@ -58,13 +70,10 @@ public class LinksActivity extends AppCompatActivity {
 
         setSupportActionBar(toolbar);
 
-        backimg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        toolbar.setNavigationOnClickListener(v -> finish());
 
+        loginSession = new LoginSession(this);
+        
 
         addDataLinks("https://www.youtube.com/", "Youtube link");
         addDataLinks("https://www.youtube.com/", "Continuity form(2020-2021)");
@@ -91,24 +100,16 @@ public class LinksActivity extends AppCompatActivity {
             View bottomsheetview = LayoutInflater.from(this).inflate(R.layout.addlinks_bottomsheet, (RelativeLayout) findViewById(R.id.addlink_parentlayout));
             addebookviews(bottomsheetview);
 
-            cancelimg.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    bottomSheetDialog.dismiss();
-                }
-            });
+            cancelimg.setOnClickListener(v -> bottomSheetDialog.dismiss());
 
-            btnupload.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (edtlinkname.getText().toString().equals("")){
-                        toast(LinksActivity.this,"Please enter link name");
-                    }else if(edtweblink.getText().toString().equals("")){
-                        toast(LinksActivity.this,"Please enter your web link");
-                    } else {
-                        progressBar.setVisibility(View.VISIBLE);
-                        uploadLink();
-                    }
+            btnupload.setOnClickListener(v -> {
+                if (edtlinkname.getText().toString().equals("")){
+                    toast(LinksActivity.this,"Please enter link name");
+                }else if(edtweblink.getText().toString().equals("")){
+                    toast(LinksActivity.this,"Please enter your web link");
+                } else {
+                    progressBar.setVisibility(View.VISIBLE);
+                    uploadLink();
                 }
             });
 
@@ -120,17 +121,51 @@ public class LinksActivity extends AppCompatActivity {
         return false;
     }
 
+
+
     void uploadLink() {
 
-        toast(LinksActivity.this,"Link upload successfully");
-        progressBar.setVisibility(View.GONE);
-        bottomSheetDialog.dismiss();
+
+        progressBar.setVisibility(View.VISIBLE);
+
+        Call<AddLinkResponse> addResponseCall = RetrofitClient.getInstance().getapi().addLink(edtlinkname.getText().toString(),edtweblink.getText().toString(),loginSession.getAdminDetailsFromSession().get(KEY_DEPT_ID));
+
+        addResponseCall.enqueue(new Callback<AddLinkResponse>() {
+            @Override
+            public void onResponse(Call<AddLinkResponse> call, Response<AddLinkResponse> response) {
+
+                progressBar.setVisibility(View.GONE);
+
+                if (response.isSuccessful()){
+                    if (response.body() != null){
+                        if (response.body().getStatus() == 1) {
+                            toast(LinksActivity.this, response.body().getMessage());
+                            bottomSheetDialog.dismiss();
+                        }else {
+                            toast(LinksActivity.this,response.body().getMessage());
+                        }
+                    }else {
+                        toast(LinksActivity.this,"Error Occured");
+                    }
+                }
+            }
+
+            @SuppressLint("LogConditional")
+            @Override
+            public void onFailure(Call<AddLinkResponse> call, Throwable t) {
+
+                progressBar.setVisibility(View.GONE);
+                bottomSheetDialog.dismiss();
+
+                Log.d("addadmin",t.getLocalizedMessage());
+                toast(LinksActivity.this,"Something went Wrong ");
+            }
+        });
+
+
     }
 
-
     private void addebookviews(View bottomsheetview) {
-
-        cancelimg = bottomsheetview.findViewById(R.id.addlink_backimg);
 
         edtweblink = bottomsheetview.findViewById(R.id.addlink_edtbweblink);
         edtlinkname = bottomsheetview.findViewById(R.id.addlink_edtlname);
@@ -157,7 +192,6 @@ public class LinksActivity extends AppCompatActivity {
 
         toolbar = findViewById(R.id.links_toolbar);
 
-        backimg = findViewById(R.id.links_backimg);
     }
 
 }

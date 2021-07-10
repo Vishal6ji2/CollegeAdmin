@@ -3,8 +3,6 @@ package com.mbm.mbmadmin.Activities;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
@@ -21,7 +19,6 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -35,28 +32,14 @@ import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.gson.Gson;
-import com.mbm.mbmadmin.Adapters.NewsPostAdapter;
 import com.mbm.mbmadmin.Adapters.PlacementAdapter;
-import com.mbm.mbmadmin.ModelResponse.PlacementnewsResponse;
 import com.mbm.mbmadmin.R;
-import com.mbm.mbmadmin.RetrofitClient;
 import com.mbm.mbmadmin.Suitcases.PlacementNewsFetchResponse;
-import com.mbm.mbmadmin.Suitcases.PlacementSuitcase;
-
-import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Objects;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
-import static com.mbm.mbmadmin.ViewUtils.toast;
 
 public class PlacementActivity extends AppCompatActivity {
 
@@ -166,6 +149,7 @@ public class PlacementActivity extends AppCompatActivity {
 
         return true;
     }
+
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {

@@ -3,10 +3,8 @@ package com.mbm.mbmadmin.Activities;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
@@ -15,40 +13,21 @@ import android.provider.OpenableColumns;
 import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.material.appbar.MaterialToolbar;
-import com.google.gson.Gson;
-import com.mbm.mbmadmin.Adapters.PlacementAdapter;
-import com.mbm.mbmadmin.Adapters.TimetableAdapter;
-import com.mbm.mbmadmin.ModelResponse.EbookResponse;
-import com.mbm.mbmadmin.ModelResponse.TimetableResponse;
 import com.mbm.mbmadmin.R;
-import com.mbm.mbmadmin.RetrofitClient;
 import com.mbm.mbmadmin.Suitcases.TimetableFetchResponse;
-import com.mbm.mbmadmin.Suitcases.TimetableSuitcase;
-
-import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.sql.Time;
 import java.util.ArrayList;
-import java.util.Objects;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
-import static com.mbm.mbmadmin.ViewUtils.toast;
 
 public class TimetableActivity extends AppCompatActivity {
 

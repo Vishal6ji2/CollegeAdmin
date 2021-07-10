@@ -14,6 +14,7 @@ import java.util.ArrayList;
 
 public class StudentsListSession {
 
+    private static final String KEY_STUDENTS = "studentsListSession" ;
     SharedPreferences studentsListSession;
 
     SharedPreferences.Editor editor;
@@ -25,13 +26,13 @@ public class StudentsListSession {
     public StudentsListSession(@NonNull Context context){
         this.context = context;
 
-        studentsListSession = context.getSharedPreferences("studentsListSession",Context.MODE_PRIVATE);
+        studentsListSession = context.getSharedPreferences(KEY_STUDENTS,Context.MODE_PRIVATE);
         editor = studentsListSession.edit();
     }
 
     public void saveStudentsList(@NonNull ArrayList<GetAdminStudentsResponse.Student> arrStudentsList){
 
-        studentsListSession = context.getSharedPreferences("studentsListSession",Context.MODE_PRIVATE);
+        studentsListSession = context.getSharedPreferences(KEY_STUDENTS,Context.MODE_PRIVATE);
         Gson gson = new Gson();
         String json = gson.toJson(arrStudentsList);
         editor.putString(studentsList,json);
@@ -42,7 +43,7 @@ public class StudentsListSession {
     @NonNull
     public ArrayList<GetAdminStudentsResponse.Student> loadStudentsList(@NonNull Context context){
 
-        studentsListSession = context.getSharedPreferences("studentsListSession",Context.MODE_PRIVATE);
+        studentsListSession = context.getSharedPreferences(KEY_STUDENTS,Context.MODE_PRIVATE);
         String json = studentsListSession.getString(studentsList,"");
 
         Gson gson = new Gson();

@@ -1,22 +1,35 @@
 package com.mbm.mbmadmin;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Environment;
 import android.provider.OpenableColumns;
+import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.Log;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import java.io.File;
+import java.security.Permission;
 
-import static com.mbm.mbmadmin.Activities.EbooksActivity.copy;
+import static com.mbm.mbmadmin.ViewUtils.toast;
+
 
 public class FileUtils {
 
     //    getFileName
+
     @NonNull
     public static String getfilename(@NonNull Context context, @NonNull Uri uri){
         String filename = "";
@@ -56,9 +69,14 @@ public class FileUtils {
             File copyFile = new File(wallpaperDirectory + File.separator + getfilename(context,contentUri));
             // create folder if not exists
 
-            copy(context, contentUri, copyFile);
+//            copy(context, contentUri, copyFile);
             return copyFile.getAbsolutePath();
         }
         return null;
     }
+
+
+
+
+
 }

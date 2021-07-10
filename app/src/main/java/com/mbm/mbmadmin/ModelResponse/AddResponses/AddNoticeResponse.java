@@ -1,11 +1,11 @@
-package com.mbm.mbmadmin.ModelResponse;
+package com.mbm.mbmadmin.ModelResponse.AddResponses;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
-public class NoticeResponse implements Serializable {
+public class AddNoticeResponse implements Serializable {
 
     @SerializedName("error")
     @Expose

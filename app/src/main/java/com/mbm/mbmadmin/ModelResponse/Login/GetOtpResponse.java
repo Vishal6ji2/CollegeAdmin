@@ -1,10 +1,9 @@
-package com.mbm.mbmadmin.ModelResponse;
+package com.mbm.mbmadmin.ModelResponse.Login;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
-
 
 public class GetOtpResponse implements Serializable
 {

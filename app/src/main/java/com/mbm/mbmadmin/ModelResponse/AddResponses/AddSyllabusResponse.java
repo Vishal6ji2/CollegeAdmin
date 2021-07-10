@@ -1,13 +1,11 @@
-package com.mbm.mbmadmin.ModelResponse;
-
+package com.mbm.mbmadmin.ModelResponse.AddResponses;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
-
-public class AdminAddResponse implements Serializable
+public class AddSyllabusResponse implements Serializable
 {
 
     @SerializedName("status")
@@ -34,3 +32,4 @@ public class AdminAddResponse implements Serializable
     }
 
 }
+

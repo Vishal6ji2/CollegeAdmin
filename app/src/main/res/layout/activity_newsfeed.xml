@@ -13,103 +13,96 @@
         android:layout_height="wrap_content"
         app:cardElevation="@dimen/_3sdp">
 
-    <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/newsfeed_toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        app:menu="@menu/menuaddwhite"
-        android:background="@color/colorPrimaryDark">
-
-        <ImageView
-            android:id="@+id/newsfeed_backimg"
-            android:layout_width="@dimen/_22sdp"
-            android:layout_height="@dimen/_22sdp"
-            android:src="@drawable/arrowback"
-            tools:ignore="ContentDescription" />
-
-        <TextView
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/newsfeed_toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="News feed"
-            android:textSize="@dimen/_15ssp"
-            android:textStyle="bold"
-            android:textColor="@android:color/white"
-            android:gravity="center"/>
+            android:layout_height="?attr/actionBarSize"
+            app:menu="@menu/menuaddwhite"
+            app:navigationIcon="@drawable/arrowback"
+            android:background="@color/colorPrimaryDark">
 
-    </com.google.android.material.appbar.MaterialToolbar>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="News feed"
+                android:textSize="@dimen/_15ssp"
+                android:textStyle="bold"
+                android:textColor="@android:color/white"
+                android:gravity="center"/>
+
+        </com.google.android.material.appbar.MaterialToolbar>
 
     </androidx.cardview.widget.CardView>
-
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/students_refresh"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/students_card">
-
-    <RelativeLayout
-        android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/newsfeed_updatecard"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_centerHorizontal="true"
-        app:cardCornerRadius="@dimen/_10sdp"
-        app:cardUseCompatPadding="true"
-        app:cardBackgroundColor="@color/colorPrimary">
-
-        <TextView
-            android:id="@+id/newsfeed_txtupdate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Update News"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/_12ssp"
-            android:padding="@dimen/_5sdp"/>
-
-    </androidx.cardview.widget.CardView>
-
-    <com.facebook.shimmer.ShimmerFrameLayout
-        android:id="@+id/newsfeed_shimmerlayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <ScrollView
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            <androidx.cardview.widget.CardView
+                android:id="@+id/newsfeed_updatecard"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_centerHorizontal="true"
+                app:cardCornerRadius="@dimen/_10sdp"
+                app:cardUseCompatPadding="true"
+                app:cardBackgroundColor="@color/colorPrimary">
 
-            <include layout="@layout/newsfeedshimmerlayout"/>
+                <TextView
+                    android:id="@+id/newsfeed_txtupdate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Update News"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/_12ssp"
+                    android:padding="@dimen/_5sdp"/>
 
-            <include layout="@layout/newsfeedshimmerlayout"/>
+            </androidx.cardview.widget.CardView>
 
-            <include layout="@layout/newsfeedshimmerlayout"/>
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/newsfeed_shimmerlayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-            <include layout="@layout/newsfeedshimmerlayout"/>
+                <ScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-            <include layout="@layout/newsfeedshimmerlayout"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
 
-        </LinearLayout>
+                        <include layout="@layout/newsfeedshimmerlayout"/>
 
-        </ScrollView>
+                        <include layout="@layout/newsfeedshimmerlayout"/>
 
-    </com.facebook.shimmer.ShimmerFrameLayout>
+                        <include layout="@layout/newsfeedshimmerlayout"/>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/newsfeed_recyclerview"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="gone"/>
+                        <include layout="@layout/newsfeedshimmerlayout"/>
 
-    </RelativeLayout>
+                        <include layout="@layout/newsfeedshimmerlayout"/>
+
+                    </LinearLayout>
+
+                </ScrollView>
+
+            </com.facebook.shimmer.ShimmerFrameLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/newsfeed_recyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"/>
+
+        </RelativeLayout>
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
 
 </LinearLayout>

@@ -1,77 +1,44 @@
 package com.mbm.mbmadmin.Activities;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import android.annotation.SuppressLint;
-import android.content.Context;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.Base64;
-import android.util.Log;
-import android.view.LayoutInflater;
+import android.os.Environment;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.WindowManager;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.google.android.material.appbar.MaterialToolbar;
-import com.google.android.material.bottomsheet.BottomSheetDialog;
-import com.google.android.material.button.MaterialButton;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.gson.Gson;
 import com.mbm.mbmadmin.Adapters.EbookAdapter;
 import com.mbm.mbmadmin.FileUtils;
-import com.mbm.mbmadmin.ModelResponse.EbookResponse;
 import com.mbm.mbmadmin.R;
-import com.mbm.mbmadmin.RetrofitClient;
 import com.mbm.mbmadmin.Suitcases.EbooksSuitcase;
 
-import org.jetbrains.annotations.NotNull;
-
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Objects;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
-import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
-import static com.mbm.mbmadmin.FileUtils.getFilePathFromURI;
+import static com.mbm.mbmadmin.Activities.HomeActivity.isPermissionGranted;
+import static com.mbm.mbmadmin.Activities.HomeActivity.takeFilePermission;
 import static com.mbm.mbmadmin.ViewUtils.toast;
 
-public class EbooksActivity extends AppCompatActivity implements ActivityCompat.OnRequestPermissionsResultCallback {
 
-    private static final int BUFFER_SIZE = 1024;
-    private static final int REQUEST_WRITE_PERMISSION = 786;
-    ImageView backimg;
+public class EbooksActivity extends AppCompatActivity implements ActivityCompat.OnRequestPermissionsResultCallback {
 
     RecyclerView recyclerView;
 
@@ -81,8 +48,11 @@ public class EbooksActivity extends AppCompatActivity implements ActivityCompat.
 
     Uri pdfuri;
 
-    //ebookbottomsheet Views
+    ActivityResultLauncher<Intent> launchSomeActivity;
 
+
+    //ebookbottomsheet Views
+/*
     BottomSheetDialog bottomSheetDialog;
 
     LinearLayout llfile;
@@ -97,9 +67,9 @@ public class EbooksActivity extends AppCompatActivity implements ActivityCompat.
 
     MaterialButton btnupload;
 
-    String encodedimage,encodedpdf,bookimagename;
+    FloatingActionButton fab;*/
 
-    FloatingActionButton fab;
+    String encodedimage,encodedpdf,bookimagename;
 
 
     @Override
@@ -107,18 +77,41 @@ public class EbooksActivity extends AppCompatActivity implements ActivityCompat.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ebooks);
 
-        requestPermission();
 
         initviews();
 
         setSupportActionBar(toolbar);
 
-        backimg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        toolbar.setNavigationOnClickListener(v -> finish());
+
+        if (isPermissionGranted(this)){
+
+            return ;
+        }else {
+            takeFilePermission(this);
+        }
+
+
+
+        launchSomeActivity = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == Activity.RESULT_OK) {
+
+                        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.R) {
+                            if (Environment.isExternalStorageManager()) {
+                                toast(this, "Permission already Granted in android 11 ");
+                            } else {
+                                takeFilePermission(this);
+                            }
+                        }
+                        Intent data = result.getData();
+                        // your operation....
+                        if (data != null) {
+                            Uri uri = data.getData();
+                        }
+                    }
+                });
 
 
         addEbookData(R.drawable.designerimg,"C++ programming language","7th edition","Vishal kumavat");
@@ -139,12 +132,10 @@ public class EbooksActivity extends AppCompatActivity implements ActivityCompat.
 
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (requestCode == REQUEST_WRITE_PERMISSION && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+    private void getDataFromIntent() {
 
-            Log.d("permission",permissions.toString());
-        }
+        // your operation....
+
     }
 
     @Override
@@ -153,9 +144,19 @@ public class EbooksActivity extends AppCompatActivity implements ActivityCompat.
         return true;
     }
 
-    private void requestPermission() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            requestPermissions(new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_WRITE_PERMISSION);
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (grantResults.length > 0){
+            if (requestCode == 101) {
+                boolean readExternalStorage = grantResults[0] == PackageManager.PERMISSION_GRANTED;
+                if (readExternalStorage) {
+                    toast(this, "Permission already Granted android 10 or below");
+                } else {
+                    takeFilePermission(this);
+                }
+            }
         }
     }
 
@@ -163,16 +164,17 @@ public class EbooksActivity extends AppCompatActivity implements ActivityCompat.
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.menuadditemwhite){
 
-            bottomSheetDialog = new BottomSheetDialog(EbooksActivity.this,R.style.BottomSheetDialogTheme);
+            Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+            intent.setType("application/pdf");
+            launchSomeActivity.launch(intent);
+//            getDataFromIntent();
+
+
+          /*  bottomSheetDialog = new BottomSheetDialog(EbooksActivity.this,R.style.BottomSheetDialogTheme);
             View bottomsheetview = LayoutInflater.from(this).inflate(R.layout.addebook_bottomsheet,(RelativeLayout)findViewById(R.id.addebook_parentlayout));
             addebookviews(bottomsheetview);
 
-            cancelimg.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    bottomSheetDialog.dismiss();
-                }
-            });
+            cancelimg.setOnClickListener(v -> bottomSheetDialog.dismiss());
 
             edtbname.addTextChangedListener(new TextWatcher() {
                 @Override
@@ -212,23 +214,17 @@ public class EbooksActivity extends AppCompatActivity implements ActivityCompat.
                 }
             });
 
-            fab.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-                    intent.setType("image/*");
-                    startActivityForResult(intent,10);
-                }
+            fab.setOnClickListener(v -> {
+                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                intent.setType("image/*");
+                startActivityForResult(intent,10);
             });
 
-            addimg.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+            addimg.setOnClickListener(v -> {
+                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
 //                    intent.setType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
-                    intent.setType("application/pdf");
-                    startActivityForResult(intent,20);
-                }
+                intent.setType("application/pdf");
+                startActivityForResult(intent,20);
             });
 
             btnupload.setOnClickListener(new View.OnClickListener() {
@@ -252,7 +248,7 @@ public class EbooksActivity extends AppCompatActivity implements ActivityCompat.
 
             bottomSheetDialog.setContentView(bottomsheetview);
             bottomSheetDialog.show();
-
+*/
             return true;
         }
         return false;
@@ -263,15 +259,6 @@ public class EbooksActivity extends AppCompatActivity implements ActivityCompat.
         RequestBody requestBody = RequestBody.create(MediaType.parse(Objects.requireNonNull(getContentResolver().getType(fileURi))),file);
         return MultipartBody.Part.createFormData(partname,file.getName(),requestBody);
     }
-    /*private fun prepareFilePart(
-        partName: String,
-        fileUri: Uri
-    ): MultipartBody.Part? {
-        val file = File(RealPathUtils.getPath(context!!, fileUri))
-        val requestBody: RequestBody =
-            RequestBody.create(MediaType.parse(contentResolver.getType(fileUri)), file)
-        return MultipartBody.Part.createFormData(partName, file.name, requestBody)
-    }*/
 
 
 /*
@@ -320,7 +307,7 @@ public class EbooksActivity extends AppCompatActivity implements ActivityCompat.
     }
 
 */
-
+/*
     public void SetUtils(){
 
         edtaname.setText("");
@@ -394,43 +381,6 @@ public class EbooksActivity extends AppCompatActivity implements ActivityCompat.
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    public static void copy(@NonNull Context context, @NonNull Uri srcUri, @NonNull File dstFile) {
-        try {
-            InputStream inputStream = context.getContentResolver().openInputStream(srcUri);
-            if (inputStream == null) return;
-            OutputStream outputStream = new FileOutputStream(dstFile);
-            copystream(inputStream, outputStream);
-            inputStream.close();
-            outputStream.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static void copystream(@NonNull InputStream input, @NonNull OutputStream output) throws Exception {
-        byte[] buffer = new byte[BUFFER_SIZE];
-
-        BufferedInputStream in = new BufferedInputStream(input, BUFFER_SIZE);
-        BufferedOutputStream out = new BufferedOutputStream(output, BUFFER_SIZE);
-        int n;
-        try {
-            while ((n = in.read(buffer, 0, BUFFER_SIZE)) != -1) {
-                out.write(buffer, 0, n);
-            }
-            out.flush();
-        } finally {
-            try {
-                out.close();
-            } catch (IOException e) {
-                Log.e(e.getMessage(), String.valueOf(e));
-            }
-            try {
-                in.close();
-            } catch (IOException e) {
-                Log.e(e.getMessage(), String.valueOf(e));
-            }
-        }
-    }
 
     private void addebookviews(View bottomsheetview) {
 
@@ -456,6 +406,7 @@ public class EbooksActivity extends AppCompatActivity implements ActivityCompat.
 
     }
 
+    */
     public void addEbookData(int bookimg, @NonNull String bookname, @NonNull String bookedition, @NonNull String bookauthor){
 
         EbooksSuitcase ebooksSuitcase = new EbooksSuitcase();
@@ -470,11 +421,16 @@ public class EbooksActivity extends AppCompatActivity implements ActivityCompat.
 
     private void initviews() {
 
-        backimg = findViewById(R.id.ebook_backimg);
-
         toolbar = findViewById(R.id.ebook_toolbar);
 
         recyclerView = findViewById(R.id.ebook_recyclerview);
+
+    }
+
+    public void openSomeActivityForResult() {
+
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("application/pdf");
 
     }
 }

@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
@@ -12,7 +11,6 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.OpenableColumns;
@@ -37,36 +35,24 @@ import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.mbm.mbmadmin.Adapters.NewsPostAdapter;
 import com.mbm.mbmadmin.FileUtils;
-import com.mbm.mbmadmin.ModelResponse.NewsFeedResponse;
 import com.mbm.mbmadmin.R;
-import com.mbm.mbmadmin.RetrofitClient;
 import com.mbm.mbmadmin.Suitcases.NewsFetchResponse;
-import com.mbm.mbmadmin.Suitcases.NewsPostSuitcase;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Objects;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
 import okhttp3.RequestBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 import static com.mbm.mbmadmin.Networks.CheckInternet.isConnected;
-import static com.mbm.mbmadmin.ViewUtils.toast;
 
 public class NewsfeedActivity extends AppCompatActivity {
 
-    MaterialToolbar toolbar;
+    private static final int SELECT_IMAGE_REQUEST = 100;
 
-    ImageView backimg;
+    MaterialToolbar toolbar;
 
     RecyclerView recyclerView;
 
@@ -91,7 +77,8 @@ public class NewsfeedActivity extends AppCompatActivity {
     int currcount = 0;
     int prevcount,flag = 0;
 
-    //addnews bottomsheetviews
+
+    //add NewsFeed bottomsheetviews
 
     MaterialToolbar addtoolbar;
 
@@ -121,12 +108,7 @@ public class NewsfeedActivity extends AppCompatActivity {
 
         cardUpdate.setVisibility(View.GONE);
 
-        backimg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        toolbar.setNavigationOnClickListener(v -> onBackPressed());
 
         arrNewslist.clear();
 
@@ -137,14 +119,11 @@ public class NewsfeedActivity extends AppCompatActivity {
             showNetworkDialog();
         }
 
-        cardUpdate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        cardUpdate.setOnClickListener(v -> {
 
-                recreate();
-                cardUpdate.setVisibility(View.GONE);
-                flag = 0;
-            }
+            recreate();
+            cardUpdate.setVisibility(View.GONE);
+            flag = 0;
         });
 
     }
@@ -152,7 +131,6 @@ public class NewsfeedActivity extends AppCompatActivity {
     private void showNetworkDialog() {
     }
 /*
-
     public void addPostData(){
 
         recyclerView.setVisibility(View.GONE);
@@ -222,7 +200,8 @@ public class NewsfeedActivity extends AppCompatActivity {
 
     }
 
-*/
+
+    */
     void checkNewPosts(int currcount) {
 
         if (currcount>prevcount){
@@ -255,20 +234,12 @@ public class NewsfeedActivity extends AppCompatActivity {
             addnewsviews(bottomsheetview);
 
 
-            cancelimg.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    bottomSheetDialog.dismiss();
-                }
-            });
+            cancelimg.setOnClickListener(v -> bottomSheetDialog.dismiss());
 
-            fabcam.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-                    intent.setType("image/*");
-                    startActivityForResult(intent, 10);
-                }
+            fabcam.setOnClickListener(v -> {
+                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                intent.setType("image/jpeg*");
+                startActivityForResult(intent, SELECT_IMAGE_REQUEST);
             });
 
             edttitle.addTextChangedListener(new TextWatcher() {
@@ -289,14 +260,11 @@ public class NewsfeedActivity extends AppCompatActivity {
 
                 }
             });
-            btnpost.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (edtnews.getText().toString().isEmpty()){
-                        Toast.makeText(NewsfeedActivity.this,"Enter Post Details",Toast.LENGTH_SHORT).show();
-                    } else {
+            btnpost.setOnClickListener(v -> {
+                if (edtnews.getText().toString().isEmpty()){
+                    Toast.makeText(NewsfeedActivity.this,"Enter Post Details",Toast.LENGTH_SHORT).show();
+                } else {
 //                        uploadpost();
-                    }
                 }
             });
 
@@ -324,13 +292,11 @@ public class NewsfeedActivity extends AppCompatActivity {
 
     @SuppressLint("LogConditional")
     void uploadpost() {
+
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         progressBar.setVisibility(View.VISIBLE);
 
-
         File file = new File(FileUtils.getFilePathFromURI(this, uri));
-
-
 
         Log.d("okhttpclient",uri.toString());
 
@@ -403,7 +369,7 @@ public class NewsfeedActivity extends AppCompatActivity {
 
             uri = data.getData();
 
-            imagename =  getimagename(uri,data);
+            imagename =  getimagename(data);
             Log.d("Image","imageuri->"+ uri);
             /*try {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
@@ -441,10 +407,10 @@ public class NewsfeedActivity extends AppCompatActivity {
     }
 
     @NonNull
-    public String getimagename(@NonNull Uri uri, Intent data){
+    public String getimagename(@NonNull Intent data){
         String filename = null;
         if (data != null) {
-            uri = data.getData();
+            Uri uri = data.getData();
 
             String uristring = uri.toString();
             File file = new File(uristring);
@@ -475,8 +441,6 @@ public class NewsfeedActivity extends AppCompatActivity {
         cardUpdate = findViewById(R.id.newsfeed_updatecard);
 
         toolbar = findViewById(R.id.newsfeed_toolbar);
-
-        backimg = findViewById(R.id.newsfeed_backimg);
 
         shimmerFrameLayout = findViewById(R.id.newsfeed_shimmerlayout);
 

@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.mbm.mbmadmin.Activities.FullPlacementNewsActivity;
@@ -53,6 +54,7 @@ public class PlacementAdapter extends RecyclerView.Adapter<PlacementAdapter.View
         colors.add("#4DD0E1");
         colors.add("#BA68C8");
         colors.add("#A1887F");
+
         return new ViewHolder(LayoutInflater.from(context).inflate(R.layout.customplacementlayout,parent,false));
     }
 
@@ -72,40 +74,28 @@ public class PlacementAdapter extends RecyclerView.Adapter<PlacementAdapter.View
 
         holder.itemView.startAnimation(AnimationUtils.loadAnimation(context,R.anim.tabsanim));
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                holder.cmptitle.setTextColor(context.getResources().getColor(R.color.colordarkgrey));
-                holder.cmpnews.setTextColor(context.getResources().getColor(R.color.colordarkgrey));
-                holder.cmptime.setTextColor(context.getResources().getColor(R.color.colordarkgrey));
+        holder.itemView.setOnClickListener(v -> {
+            holder.cmptitle.setTextColor(ContextCompat.getColor(context,R.color.colordarkgrey));
+            holder.cmpnews.setTextColor(ContextCompat.getColor(context,R.color.colordarkgrey));
+            holder.cmptime.setTextColor(ContextCompat.getColor(context,R.color.colordarkgrey));
 
-                sendCmpData(position);
+            sendCmpData(position);
 
-            }
         });
 
-        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
+        holder.itemView.setOnLongClickListener(v -> {
 
-                final AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                builder.setMessage("Do you want to delete this post from news feed")
-                        .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                arrplacementlist.remove(position);
-                                notifyDataSetChanged();
-                            }
-                        })
-                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
+            final AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            builder.setMessage("Do you want to delete this post from news feed")
+                    .setPositiveButton("Delete", (dialog, which) -> {
+                        arrplacementlist.remove(position);
+                        notifyDataSetChanged();
+                    })
+                    .setNegativeButton("Cancel", (dialog, which) -> {
 
-                            }
-                        });
-                builder.show();
-                return true;
-            }
+                    });
+            builder.show();
+            return true;
         });
 
     }

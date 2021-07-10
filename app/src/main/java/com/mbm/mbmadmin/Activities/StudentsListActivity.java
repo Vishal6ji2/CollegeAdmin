@@ -3,17 +3,16 @@ package com.mbm.mbmadmin.Activities;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.provider.OpenableColumns;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -36,11 +35,10 @@ import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import com.google.android.material.button.MaterialButton;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.mbm.mbmadmin.Adapters.StudentsAdapter;
 
-import com.mbm.mbmadmin.ModelResponse.StudentAddResponse;
+import com.mbm.mbmadmin.ModelResponse.AddResponses.AddStudentResponse;
 import com.mbm.mbmadmin.R;
 
 import com.mbm.mbmadmin.RetrofitClient;
@@ -58,6 +56,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static android.app.Activity.RESULT_OK;
 import static com.mbm.mbmadmin.Sessions.LoginSession.KEY_DEPT_ID;
 import static com.mbm.mbmadmin.ViewUtils.toast;
 
@@ -68,6 +67,8 @@ public class StudentsListActivity extends AppCompatActivity {
     TextView txtTitle;
 
     SwipeRefreshLayout refreshLayout;
+
+    Context context;
 
     EditText edtsearch;
 
@@ -120,6 +121,7 @@ public class StudentsListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_students_list);
 
+
         initviews();
 
         setSupportActionBar(toolbar);
@@ -137,14 +139,11 @@ public class StudentsListActivity extends AppCompatActivity {
 
 //        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
+        refreshLayout.setOnRefreshListener(() -> {
 
-                toast(StudentsListActivity.this,"Refresh");
-                getStudentsData();
-                refreshLayout.setRefreshing(false);
-            }
+            toast(StudentsListActivity.this,"Refresh");
+            getStudentsData();
+            refreshLayout.setRefreshing(false);
         });
 
         edtsearch.addTextChangedListener(new TextWatcher() {
@@ -223,26 +222,18 @@ public class StudentsListActivity extends AppCompatActivity {
         final View bottomsheetview = LayoutInflater.from(StudentsListActivity.this).inflate(R.layout.addstudent_bottomsheet,(LinearLayout)findViewById(R.id.addstudent_bottomsheetlayout));
         addStudentViews(bottomsheetview);
 
-        canceladdImg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                bottomSheetDialog.dismiss();
+        canceladdImg.setOnClickListener(v -> bottomSheetDialog.dismiss());
+
+        btnAddSave.setOnClickListener(v -> {
+            if (edtRegNo.getText().toString().equals("") && edtName.getText().toString().equals("") && edtEmail.getText().toString().equals("") && edtMob.getText().toString().equals("")){
+
+                toast(StudentsListActivity.this,"Enter Student full details");
+
+            }else {
+
+                addStudentsData();
             }
-        });
 
-        btnAddSave.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (edtRegNo.getText().toString().equals("") && edtName.getText().toString().equals("") && edtEmail.getText().toString().equals("") && edtMob.getText().toString().equals("")){
-
-                    toast(StudentsListActivity.this,"Enter Student full details");
-
-                }else {
-
-                    addStudentsData();
-                }
-
-            }
         });
 
         bottomSheetDialog.setContentView(bottomsheetview);
@@ -308,11 +299,11 @@ public class StudentsListActivity extends AppCompatActivity {
 
         addProgressBar.setVisibility(View.VISIBLE);
 
-        Call<StudentAddResponse> studentAddResponseCall = RetrofitClient.getInstance().getapi().addStudent(edtEmail.getText().toString(),edtMob.getText().toString(),edtName.getText().toString(),edtRegNo.getText().toString(),loginSession.getAdminDetailsFromSession().get(KEY_DEPT_ID));
+        Call<AddStudentResponse> studentAddResponseCall = RetrofitClient.getInstance().getapi().addStudent(edtEmail.getText().toString(),edtMob.getText().toString(),edtName.getText().toString(),edtRegNo.getText().toString(),loginSession.getAdminDetailsFromSession().get(KEY_DEPT_ID));
 
-        studentAddResponseCall.clone().enqueue(new Callback<StudentAddResponse>() {
+        studentAddResponseCall.clone().enqueue(new Callback<AddStudentResponse>() {
             @Override
-            public void onResponse(Call<StudentAddResponse> call, Response<StudentAddResponse> response) {
+            public void onResponse(Call<AddStudentResponse> call, Response<AddStudentResponse> response) {
 
                 addProgressBar.setVisibility(View.GONE);
                 if (response.isSuccessful()){
@@ -331,7 +322,7 @@ public class StudentsListActivity extends AppCompatActivity {
 
             @SuppressLint("LogConditional")
             @Override
-            public void onFailure(Call<StudentAddResponse> call, Throwable t) {
+            public void onFailure(Call<AddStudentResponse> call, Throwable t) {
                 Log.d(TAG,t.getLocalizedMessage());
                 toast(StudentsListActivity.this,"Something Went Wrong");
             }
@@ -369,9 +360,6 @@ public class StudentsListActivity extends AppCompatActivity {
 
         arrstudentlist.clear();
 
-//        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-//        recyclerView.getLayoutManager().removeAllViews();
-
         studentsListSession = new StudentsListSession(this);
 
         arrstudentlist = studentsListSession.loadStudentsList(this);
@@ -379,16 +367,8 @@ public class StudentsListActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         studentsAdapter = new StudentsAdapter(this,arrstudentlist);
 
-//        saveState = recyclerView.getLayoutManager().onSaveInstanceState();
-
-//        recyclerView.getLayoutManager().onRestoreInstanceState(saveState);
-
-//        recyclerView.addItemDecoration(new DividerItemDecoration(this,DividerItemDecoration.VERTICAL));
-
 
         recyclerView.setAdapter(studentsAdapter);
-
-//        studentsAdapter.notifyDataSetChanged();
 
     }
 

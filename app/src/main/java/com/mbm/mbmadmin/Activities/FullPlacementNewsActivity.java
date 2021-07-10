@@ -29,8 +29,6 @@ public class FullPlacementNewsActivity extends AppCompatActivity {
 
     MaterialToolbar toolbar;
 
-    ImageView backimg;
-
     TextView txtcmpnews,txtcmptitle,txtfilename,txtline,txtcmpname,txtuploadedby;
 
     ImageView fileimg;
@@ -53,15 +51,10 @@ public class FullPlacementNewsActivity extends AppCompatActivity {
 
         setSupportActionBar(toolbar);
 
-        backimg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        toolbar.setNavigationOnClickListener(v -> finish());
 
         txtuploadedby.setPaintFlags(txtuploadedby.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
-        txtcmptitle.setPaintFlags(txtcmptitle.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+//        txtcmptitle.setPaintFlags(txtcmptitle.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
 
 
         intent = getIntent();
@@ -94,14 +87,7 @@ public class FullPlacementNewsActivity extends AppCompatActivity {
 
                         txtfilename.setText(intent.getStringExtra("cmpfilename"));
 
-                        filelayout.setOnClickListener(new View.OnClickListener() {
-                            @SuppressLint("LogConditional")
-                            @Override
-                            public void onClick(View v) {
-
-                              downloadfile(fileuri);
-                            }
-                        });
+                        filelayout.setOnClickListener(v -> downloadfile(fileuri));
                 }
             }else {
                 filelayout.setVisibility(View.GONE);
@@ -134,7 +120,6 @@ public class FullPlacementNewsActivity extends AppCompatActivity {
 
         toolbar = findViewById(R.id.fplacement_toolbar);
 
-        backimg = findViewById(R.id.fplacement_backimg);
         fileimg = findViewById(R.id.fplacement_fileicon);
 
         txtcmpname = findViewById(R.id.fplacement_txtcmpname);

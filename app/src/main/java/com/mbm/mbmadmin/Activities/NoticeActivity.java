@@ -3,10 +3,8 @@ package com.mbm.mbmadmin.Activities;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -21,35 +19,18 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.material.appbar.MaterialToolbar;
-import com.google.gson.Gson;
-import com.mbm.mbmadmin.Adapters.NoticeAdapter;
-import com.mbm.mbmadmin.Adapters.PlacementAdapter;
-import com.mbm.mbmadmin.ModelResponse.NewsFeedResponse;
-import com.mbm.mbmadmin.ModelResponse.NoticeResponse;
 import com.mbm.mbmadmin.R;
-import com.mbm.mbmadmin.RetrofitClient;
 import com.mbm.mbmadmin.Suitcases.NoticeFetchResponse;
-import com.mbm.mbmadmin.Suitcases.NoticeSuitcase;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Objects;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
-import static com.mbm.mbmadmin.ViewUtils.toast;
 
 public class NoticeActivity extends AppCompatActivity {
 

@@ -137,7 +137,8 @@ public class NewsPostAdapter extends RecyclerView.Adapter<NewsPostAdapter.ViewHo
                 setNormalViews(holder, position);
 
 
-            } else if ((imagelist == null) || (imagelist.size() == 0)) {
+            }
+            else if ((imagelist == null) || (imagelist.size() == 0)) {
 
                 holder.viewPager.setVisibility(View.GONE);
                 holder.lldots.setVisibility(View.GONE);

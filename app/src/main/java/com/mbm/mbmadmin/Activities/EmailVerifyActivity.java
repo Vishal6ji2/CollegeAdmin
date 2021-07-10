@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -15,12 +14,9 @@ import android.widget.ProgressBar;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
-import com.mbm.mbmadmin.ModelResponse.GetOtpResponse;
+import com.mbm.mbmadmin.ModelResponse.Login.GetOtpResponse;
 import com.mbm.mbmadmin.R;
 import com.mbm.mbmadmin.RetrofitClient;
-import com.mbm.mbmadmin.Sessions.LoginSession;
-
-import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;

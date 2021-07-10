@@ -13,7 +13,6 @@ import android.widget.LinearLayout;
 
 import com.google.android.material.appbar.MaterialToolbar;
 import com.mbm.mbmadmin.Adapters.ImageSliderAdapter;
-import com.mbm.mbmadmin.Adapters.NewsPostAdapter;
 import com.mbm.mbmadmin.R;
 
 import java.util.ArrayList;

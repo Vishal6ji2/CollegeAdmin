@@ -1,14 +1,25 @@
 package com.mbm.mbmadmin.Activities;
 
+
+import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.core.app.ActivityOptionsCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.view.ViewCompat;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -26,12 +37,10 @@ import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.google.android.material.textfield.TextInputEditText;
-import com.mbm.mbmadmin.ModelResponse.AdminAddResponse;
+import com.mbm.mbmadmin.ModelResponse.AddResponses.AddAdminResponse;
 import com.mbm.mbmadmin.R;
 import com.mbm.mbmadmin.RetrofitClient;
 import com.mbm.mbmadmin.Sessions.LoginSession;
-import com.mbm.mbmadmin.Sessions.StudentsListSession;
-import com.mikhaellopez.circularimageview.CircularImageView;
 
 import java.util.Objects;
 
@@ -44,7 +53,9 @@ import static com.mbm.mbmadmin.Sessions.LoginSession.KEY_DEPT_ID;
 import static com.mbm.mbmadmin.Sessions.LoginSession.KEY_IMAGE;
 import static com.mbm.mbmadmin.Sessions.LoginSession.KEY_NAME;
 import static com.mbm.mbmadmin.Sessions.LoginSession.KEY_SUPER_ADMIN;
+
 import static com.mbm.mbmadmin.ViewUtils.toast;
+
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -58,13 +69,13 @@ public class HomeActivity extends AppCompatActivity {
 
     BottomSheetDialog bottomSheetDialog;
 
+    public static ActivityResultLauncher<Intent> launchSomeActivity;
+
     LoginSession loginSession;
 
     int flag = 0;
 
     int addAdmin_menu_id = 101;
-
-    StudentsListSession studentsListSession;
 
     Menu menu;
 
@@ -92,7 +103,6 @@ public class HomeActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         loginSession = new LoginSession(this);
-        studentsListSession = new StudentsListSession(this);
 
         imageurl = loginSession.getAdminDetailsFromSession().get(KEY_IMAGE);
         name = loginSession.getAdminDetailsFromSession().get(KEY_NAME);
@@ -110,79 +120,30 @@ public class HomeActivity extends AppCompatActivity {
         txtname.setText(name);
         txtbranch.setText(branch);
 
-        linkslayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(HomeActivity.this,LinksActivity.class));
-            }
+        linkslayout.setOnClickListener(v -> startActivity(new Intent(HomeActivity.this,LinksActivity.class)));
+
+        studentslayout.setOnClickListener(v -> startActivity(new Intent(HomeActivity.this,StudentsListActivity.class)));
+
+        newslayout.setOnClickListener(v -> startActivity(new Intent(HomeActivity.this,NewsfeedActivity.class)));
+
+        ebooklayout.setOnClickListener(v -> startActivity(new Intent(HomeActivity.this,EbooksActivity.class)));
+
+        noticelayout.setOnClickListener(v -> startActivity(new Intent(HomeActivity.this,NoticeActivity.class)));
+
+        placementlayout.setOnClickListener(v -> startActivity(new Intent(HomeActivity.this,PlacementActivity.class)));
+
+        paperlayout.setOnClickListener(v -> startActivity(new Intent(HomeActivity.this, PapersActivity.class)));
+
+        ttlayout.setOnClickListener(v -> startActivity(new Intent(HomeActivity.this, TimetableActivity.class)));
+
+        profileimg.setOnClickListener(v -> {
+            Intent intent = new Intent(HomeActivity.this,ProfileActivity.class);
+            ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(HomeActivity.this,profileimg, Objects.requireNonNull(ViewCompat.getTransitionName(profileimg)));
+
+            startActivity(intent,optionsCompat.toBundle());
         });
 
-        studentslayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(HomeActivity.this,StudentsListActivity.class));
-            }
-        });
-
-        newslayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(HomeActivity.this,NewsfeedActivity.class));
-            }
-        });
-
-        ebooklayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(HomeActivity.this,EbooksActivity.class));
-            }
-        });
-
-
-        noticelayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(HomeActivity.this,NoticeActivity.class));
-            }
-        });
-
-        placementlayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(HomeActivity.this,PlacementActivity.class));
-            }
-        });
-
-        paperlayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(HomeActivity.this, PapersActivity.class));
-            }
-        });
-
-        ttlayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(HomeActivity.this, TimetableActivity.class));
-            }
-        });
-
-        profileimg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(HomeActivity.this,ProfileActivity.class);
-                ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(HomeActivity.this,profileimg, Objects.requireNonNull(ViewCompat.getTransitionName(profileimg)));
-
-                startActivity(intent,optionsCompat.toBundle());
-            }
-        });
-
-        txtname.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(HomeActivity.this,ProfileActivity.class));
-            }
-        });
+        txtname.setOnClickListener(v -> startActivity(new Intent(HomeActivity.this,ProfileActivity.class)));
 
     }
 
@@ -206,14 +167,11 @@ public class HomeActivity extends AppCompatActivity {
 
             flag = 1;
 
-            addAdminmenu.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-                @Override
-                public boolean onMenuItemClick(MenuItem item) {
+            addAdminmenu.setOnMenuItemClickListener(item -> {
 
-                    addNewAdmin();
+                addNewAdmin();
 
-                    return true;
-                }
+                return true;
             });
         }
 
@@ -226,26 +184,18 @@ public class HomeActivity extends AppCompatActivity {
         View bottomsheetview = LayoutInflater.from(HomeActivity.this).inflate(R.layout.addadmin_bottomsheet,(LinearLayout)findViewById(R.id.addadmin_bottomsheetlayout));
         addAdminViews(bottomsheetview);
 
-        cancelimg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                bottomSheetDialog.dismiss();
-            }
-        });
+        cancelimg.setOnClickListener(v -> bottomSheetDialog.dismiss());
 
-        btnsubmit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (edtname.getText().toString().equals("")){
-                    edtname.setError("Please Enter Admin Name");
-                }else if (edtmob.getText().toString().equals("")){
-                    edtmob.setError("Please Enter Admin Mobile No.");
-                }else if (edtemail.getText().toString().equals("")){
-                    edtname.setError("Please Enter Admin Email id");
-                }else {
+        btnsubmit.setOnClickListener(v -> {
+            if (edtname.getText().toString().equals("")){
+                edtname.setError("Please Enter Admin Name");
+            }else if (edtmob.getText().toString().equals("")){
+                edtmob.setError("Please Enter Admin Mobile No.");
+            }else if (edtemail.getText().toString().equals("")){
+                edtname.setError("Please Enter Admin Email id");
+            }else {
 
-                    addAdminDetails();
-                }
+                addAdminDetails();
             }
         });
 
@@ -258,7 +208,6 @@ public class HomeActivity extends AppCompatActivity {
         if (item.getItemId() == R.id.homemenu_logout){
 
             loginSession.logoutAdminSession();
-            studentsListSession.removeStudentsList();
 
             startActivity(new Intent(HomeActivity.this, EmailVerifyActivity.class));
             finish();
@@ -271,11 +220,11 @@ public class HomeActivity extends AppCompatActivity {
 
         progressBar.setVisibility(View.VISIBLE);
 
-        Call<AdminAddResponse> addResponseCall = RetrofitClient.getInstance().getapi().addAdmin(edtname.getText().toString(),edtemail.getText().toString(),edtmob.getText().toString(),loginSession.getAdminDetailsFromSession().get(KEY_DEPT_ID));
+        Call<AddAdminResponse> addResponseCall = RetrofitClient.getInstance().getapi().addAdmin(edtname.getText().toString(),edtemail.getText().toString(),edtmob.getText().toString(),loginSession.getAdminDetailsFromSession().get(KEY_DEPT_ID));
 
-        addResponseCall.enqueue(new Callback<AdminAddResponse>() {
+        addResponseCall.enqueue(new Callback<AddAdminResponse>() {
             @Override
-            public void onResponse(Call<AdminAddResponse> call, Response<AdminAddResponse> response) {
+            public void onResponse(Call<AddAdminResponse> call, Response<AddAdminResponse> response) {
 
                 progressBar.setVisibility(View.GONE);
 
@@ -295,7 +244,7 @@ public class HomeActivity extends AppCompatActivity {
 
             @SuppressLint("LogConditional")
             @Override
-            public void onFailure(Call<AdminAddResponse> call, Throwable t) {
+            public void onFailure(Call<AddAdminResponse> call, Throwable t) {
 
                 progressBar.setVisibility(View.GONE);
                 bottomSheetDialog.dismiss();
@@ -340,5 +289,38 @@ public class HomeActivity extends AppCompatActivity {
         linkslayout = findViewById(R.id.home_linkslayout);
 
     }
+
+    public static void takeFilePermission(@NonNull Context context){
+
+        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.R){
+            try {
+                Intent intent = new Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION);
+                intent.addCategory("android.intent.category.DEFAULT");
+                intent.setData(Uri.parse(String.format("package:%s",context.getPackageName())));
+                launchSomeActivity.launch(intent);
+
+            }catch (Exception e){
+                Intent intent = new Intent();
+                intent.setAction(Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION);
+                launchSomeActivity.launch(intent);
+
+            }
+        }else {
+            ActivityCompat.requestPermissions((Activity) context,new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},101);
+        }
+    }
+
+    public static boolean isPermissionGranted(@NonNull Context context){
+
+        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.R){
+//            for Android 11
+            return Environment.isExternalStorageManager();
+        }else {
+//            for Below
+            int readExternalStoragePermission = ContextCompat.checkSelfPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE);
+            return readExternalStoragePermission == PackageManager.PERMISSION_GRANTED;
+        }
+    }
+
 
 }

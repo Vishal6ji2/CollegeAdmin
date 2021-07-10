@@ -2,6 +2,7 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:id="@+id/addlink_parentlayout"
@@ -23,7 +24,8 @@
                 android:id="@+id/addlink_backimg"
                 android:layout_width="@dimen/_22sdp"
                 android:layout_height="@dimen/_22sdp"
-                android:src="@drawable/closeicon"/>
+                android:src="@drawable/closeicon"
+                tools:ignore="ContentDescription" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -52,16 +54,18 @@
             android:inputType="textPersonName"
             android:padding="@dimen/_10sdp"
             android:textColor="@color/colorverydarkgrey"
-            android:maxLines="1"/>
+            android:maxLines="1"
+            tools:ignore="Autofill,HardcodedText" />
 
         <EditText
             android:id="@+id/addlink_edtbweblink"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Enter web link"
-            android:inputType="textPersonName"
+            android:inputType="textWebEditText"
             android:textColor="@color/colorverydarkgrey"
-            android:padding="@dimen/_10sdp"/>
+            android:padding="@dimen/_10sdp"
+            tools:ignore="Autofill,HardcodedText" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/addelink_btnupload"
@@ -70,7 +74,8 @@
             android:text="Upload Link"
             android:padding="@dimen/_8sdp"
             app:backgroundTint="@color/colorPrimaryDark"
-            android:layout_margin="@dimen/_8sdp"/>
+            android:layout_margin="@dimen/_8sdp"
+            tools:ignore="HardcodedText" />
 
     </LinearLayout>
 
